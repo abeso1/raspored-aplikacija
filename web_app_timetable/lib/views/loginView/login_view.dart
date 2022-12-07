@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
 
 import '../../shared/theme/colors.dart';
@@ -165,19 +166,24 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(
                     height: 48,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.white),
-                        borderRadius: BorderRadius.circular(36)),
-                    height: 50,
-                    width: 250,
-                    child: const Center(
-                      child: Text(
-                        'Kontaktirajte nas',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                  InkWell(
+                    onTap: () {
+                      launchUrl(Uri.parse('mailto:amer.beso@unvi.edu.ba'));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Colors.white),
+                          borderRadius: BorderRadius.circular(36)),
+                      height: 50,
+                      width: 250,
+                      child: const Center(
+                        child: Text(
+                          'Kontaktirajte nas',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
