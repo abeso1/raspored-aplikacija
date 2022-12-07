@@ -12,4 +12,9 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
     return userLoggedIn;
   }
+
+  logout() {
+    userLoggedIn = false;
+    notifyListeners();
+  }
 }

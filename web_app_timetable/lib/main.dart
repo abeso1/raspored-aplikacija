@@ -6,7 +6,7 @@ import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/shared/theme/colors.dart';
 import 'package:web_app_timetable/views/wrapper/wrapper.dart';
 
-import 'views/loginView/login_view.dart';
+import 'providers/tab_notifier.dart';
 
 void main() {
   runApp(const App());
@@ -22,12 +22,13 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AuthNotifier()),
+        ChangeNotifierProvider.value(value: TabNotifier()),
       ],
       child: MaterialApp(
         title: 'Školski raspored',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          //textTheme: GoogleFonts.montserratTextTheme(textTheme),
+          textTheme: GoogleFonts.montserratTextTheme(textTheme),
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: AppColors.mainGreen,
           ),

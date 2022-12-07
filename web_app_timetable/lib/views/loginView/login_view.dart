@@ -100,7 +100,7 @@ class _LoginViewState extends State<LoginView> {
                       onTap: () {
                         if (mail == null ||
                             password == null ||
-                            Provider.of<AuthNotifier>(context, listen: false)
+                            !Provider.of<AuthNotifier>(context, listen: false)
                                 .login(mail!, password!)) {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
