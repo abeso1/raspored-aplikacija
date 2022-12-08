@@ -6,6 +6,7 @@ import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/shared/theme/colors.dart';
 import 'package:web_app_timetable/views/wrapper/wrapper.dart';
 
+import 'providers/predmeti_notifier.dart';
 import 'providers/tab_notifier.dart';
 
 void main() {
@@ -15,7 +16,6 @@ void main() {
 class App extends StatelessWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -23,6 +23,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: AuthNotifier()),
         ChangeNotifierProvider.value(value: TabNotifier()),
+        ChangeNotifierProvider.value(value: PredmetiNotifier()),
       ],
       child: MaterialApp(
         title: 'Školski raspored',

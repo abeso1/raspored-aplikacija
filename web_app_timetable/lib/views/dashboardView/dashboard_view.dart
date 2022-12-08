@@ -4,6 +4,7 @@ import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
 
 import '../../shared/theme/colors.dart';
+import '../predmetView/predmet_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -109,7 +110,17 @@ class _DashboardViewState extends State<DashboardView> {
                 ],
               ),
             ),
-          )
+          ),
+          Expanded(
+            child: Consumer<TabNotifier>(
+              builder: (context, tabNotifier, child) {
+                if (tabNotifier.selectedTab == AppTab.predmeti) {
+                  return const PredmetiView();
+                }
+                return Container();
+              },
+            ),
+          ),
         ],
       ),
     );
