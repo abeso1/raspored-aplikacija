@@ -32,29 +32,74 @@ class _PredmetiViewState extends State<PredmetiView> {
             child: Row(
               children: [
                 Expanded(
-                    flex: 6,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide:
-                                const BorderSide(color: Color(0xffefefef))),
-                        fillColor: const Color(0xfff2f3f5),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                        ),
-                        hintText: 'Pretraživanje...',
-                        hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
+                  flex: 6,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide:
+                              const BorderSide(color: Color(0xffefefef))),
+                      fillColor: const Color(0xfff2f3f5),
+                      filled: true,
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.black,
                         ),
                       ),
-                    )),
-                Expanded(flex: 2, child: Container()),
+                      hintText: 'Pretraživanje...',
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
+                    onChanged: (filter) =>
+                        Provider.of<PredmetiNotifier>(context, listen: false)
+                            .filterPredmeti(filter),
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Consumer<PredmetiNotifier>(
+                  builder: (context, predmetiNotifier, child) {
+                    return Expanded(
+                      flex: 2,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            color: const Color.fromRGBO(9, 30, 66, 0.04),
+                            borderRadius: BorderRadius.circular(3)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            isExpanded: true,
+                            focusColor: Colors.transparent,
+                            value: predmetiNotifier.predmetiSort,
+                            items: PredmetiSort.values
+                                .map(
+                                  (sort) => DropdownMenuItem(
+                                    value: sort,
+                                    child: Text(
+                                      predmetiSort[sort],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              if (value != null) {
+                                predmetiNotifier.setPredmetiSort(value);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 15),
                 Expanded(
                     flex: 3,
                     child: Container(
@@ -113,7 +158,8 @@ class _PredmetiViewState extends State<PredmetiView> {
                 ),
               );
             }
-            if (predmetiNotifier.predmeti.isEmpty) {
+            if (predmetiNotifier.predmeti.isEmpty &&
+                !predmetiNotifier.predmetiFiltered) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -162,6 +208,20 @@ class _PredmetiViewState extends State<PredmetiView> {
                     ),
                   ),
                 ],
+              );
+            }
+            if (predmetiNotifier.predmeti.isEmpty &&
+                predmetiNotifier.predmetiFiltered) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Text(
+                  'Lista je prazna!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               );
             }
             return Expanded(

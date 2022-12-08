@@ -49,6 +49,7 @@ class _DashboardViewState extends State<DashboardView> {
                       ),
                     ],
                   ),
+                  const SizedBox(width: 15),
                   const Spacer(),
                   Consumer<TabNotifier>(
                     builder: (context, tabNotifier, child) {
