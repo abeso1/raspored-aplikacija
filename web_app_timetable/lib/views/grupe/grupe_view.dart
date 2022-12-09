@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:web_app_timetable/providers/nastavnici_notifier.dart';
+import 'package:web_app_timetable/providers/grupe_notifier.dart';
 import 'package:web_app_timetable/shared/theme/colors.dart';
 
-class NastavniciView extends StatefulWidget {
-  const NastavniciView({super.key});
+class GrupeView extends StatefulWidget {
+  const GrupeView({super.key});
 
   @override
-  State<NastavniciView> createState() => _NastavniciViewState();
+  State<GrupeView> createState() => _GrupeViewState();
 }
 
-class _NastavniciViewState extends State<NastavniciView> {
+class _GrupeViewState extends State<GrupeView> {
   @override
   void initState() {
     super.initState();
-    Provider.of<NastavniciNotifier>(context, listen: false).getNastavniciLoading =
+    Provider.of<GrupeNotifier>(context, listen: false).getGrupeLoading =
         true;
-    Provider.of<NastavniciNotifier>(context, listen: false).getNastavniciError =
+    Provider.of<GrupeNotifier>(context, listen: false).getGrupeError =
         false;
-    Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
+    Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
   }
 
   @override
@@ -55,13 +55,13 @@ class _NastavniciViewState extends State<NastavniciView> {
                       ),
                     ),
                     onChanged: (filter) =>
-                        Provider.of<NastavniciNotifier>(context, listen: false)
-                            .filterNastavnici(filter),
+                        Provider.of<GrupeNotifier>(context, listen: false)
+                            .filterGrupe(filter),
                   ),
                 ),
                 const SizedBox(width: 15),
-                Consumer<NastavniciNotifier>(
-                  builder: (context, nastavniciNotifier, child) {
+                Consumer<GrupeNotifier>(
+                  builder: (context, grupeNotifier, child) {
                     return Expanded(
                       flex: 2,
                       child: Container(
@@ -73,13 +73,13 @@ class _NastavniciViewState extends State<NastavniciView> {
                           child: DropdownButton(
                             isExpanded: true,
                             focusColor: Colors.transparent,
-                            value: nastavniciNotifier.nastavniciSort,
-                            items: NastavniciSort.values
+                            value: grupeNotifier.grupeSort,
+                            items: GrupeSort.values
                                 .map(
                                   (sort) => DropdownMenuItem(
                                     value: sort,
                                     child: Text(
-                                      nastavniciSort[sort],
+                                      grupeSort[sort],
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14,
@@ -90,7 +90,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                 .toList(),
                             onChanged: (value) {
                               if (value != null) {
-                                nastavniciNotifier.setNastavniciSort(value);
+                                grupeNotifier.setGrupeSort(value);
                               }
                             },
                           ),
@@ -117,7 +117,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                             ),
                             SizedBox(width: 10),
                             Text(
-                              'Dodaj novog nastavnika',
+                              'Dodaj novo odjeljenje',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -135,9 +135,9 @@ class _NastavniciViewState extends State<NastavniciView> {
         const SizedBox(
           height: 30,
         ),
-        Consumer<NastavniciNotifier>(
-          builder: (context, nastavniciNotifier, child) {
-            if (nastavniciNotifier.getNastavniciLoading) {
+        Consumer<GrupeNotifier>(
+          builder: (context, grupeNotifier, child) {
+            if (grupeNotifier.getGrupeLoading) {
               return const Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Center(
@@ -145,7 +145,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                 ),
               );
             }
-            if (nastavniciNotifier.getNastavniciError) {
+            if (grupeNotifier.getGrupeError) {
               return const Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Text(
@@ -158,8 +158,8 @@ class _NastavniciViewState extends State<NastavniciView> {
                 ),
               );
             }
-            if (nastavniciNotifier.nastavnici.isEmpty &&
-                !nastavniciNotifier.nastavniciFiltered) {
+            if (grupeNotifier.grupe.isEmpty &&
+                !grupeNotifier.grupeFiltered) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -171,7 +171,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                       children: [
                         const SizedBox(height: 40),
                         const Text(
-                          'Hmm izgleda da niste dodali nastavnike',
+                          'Hmm izgleda da niste dodali odjeljenja',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 26,
@@ -210,8 +210,8 @@ class _NastavniciViewState extends State<NastavniciView> {
                 ],
               );
             }
-            if (nastavniciNotifier.nastavnici.isEmpty &&
-                nastavniciNotifier.nastavniciFiltered) {
+            if (grupeNotifier.grupe.isEmpty &&
+                grupeNotifier.grupeFiltered) {
               return const Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Text(
@@ -228,8 +228,8 @@ class _NastavniciViewState extends State<NastavniciView> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Column(
-                  children: nastavniciNotifier.nastavnici
-                      .map((nastavnik) => Container(
+                  children: grupeNotifier.grupe
+                      .map((grupa) => Container(
                             padding: const EdgeInsets.all(20),
                             margin: const EdgeInsets.only(bottom: 20),
                             decoration: BoxDecoration(
@@ -238,7 +238,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                             child: Row(
                               children: [
                                 Text(
-                                  nastavnik.naslov,
+                                  grupa.naslov,
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,

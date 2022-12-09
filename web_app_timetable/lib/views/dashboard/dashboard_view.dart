@@ -4,12 +4,14 @@ import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
 import 'package:web_app_timetable/providers/ucionice_notifier.dart';
 
+import '../../providers/grupe_notifier.dart';
 import '../../providers/nastavnici_notifier.dart';
 import '../../providers/predmeti_notifier.dart';
 import '../../shared/theme/colors.dart';
-import '../nastavniciView/nastavnici_view.dart';
-import '../predmetiView/predmeti_view.dart';
-import '../ucioniceView.dart/ucionice_view.dart';
+import '../grupe/grupe_view.dart';
+import '../nastavnici/nastavnici_view.dart';
+import '../predmeti/predmeti_view.dart';
+import '../ucionice/ucionice_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -24,6 +26,7 @@ class _DashboardViewState extends State<DashboardView> {
     Provider.of<PredmetiNotifier>(context, listen: false).getPredmeti();
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
     Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
+    Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
     super.initState();
   }
 
@@ -136,6 +139,9 @@ class _DashboardViewState extends State<DashboardView> {
                 }
                 if (tabNotifier.selectedTab == AppTab.profesori) {
                   return const NastavniciView();
+                }
+                if (tabNotifier.selectedTab == AppTab.odjeljenja) {
+                  return const GrupeView();
                 }
                 return Container();
               },
