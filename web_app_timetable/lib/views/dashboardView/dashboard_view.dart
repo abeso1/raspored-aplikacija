@@ -4,8 +4,10 @@ import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
 import 'package:web_app_timetable/providers/ucionice_notifier.dart';
 
+import '../../providers/nastavnici_notifier.dart';
 import '../../providers/predmeti_notifier.dart';
 import '../../shared/theme/colors.dart';
+import '../nastavniciView/nastavnici_view.dart';
 import '../predmetiView/predmeti_view.dart';
 import '../ucioniceView.dart/ucionice_view.dart';
 
@@ -21,6 +23,7 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     Provider.of<PredmetiNotifier>(context, listen: false).getPredmeti();
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
+    Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
     super.initState();
   }
 
@@ -130,6 +133,9 @@ class _DashboardViewState extends State<DashboardView> {
                 }
                 if (tabNotifier.selectedTab == AppTab.ucionice) {
                   return const UcioniceView();
+                }
+                if (tabNotifier.selectedTab == AppTab.profesori) {
+                  return const NastavniciView();
                 }
                 return Container();
               },
