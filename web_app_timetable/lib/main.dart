@@ -8,6 +8,7 @@ import 'package:web_app_timetable/views/wrapper/wrapper.dart';
 
 import 'providers/predmeti_notifier.dart';
 import 'providers/tab_notifier.dart';
+import 'providers/ucionice_notifier.dart';
 
 void main() {
   runApp(const App());
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider.value(value: AuthNotifier()),
         ChangeNotifierProvider.value(value: TabNotifier()),
         ChangeNotifierProvider.value(value: PredmetiNotifier()),
+        ChangeNotifierProvider.value(value: UcioniceNotifier()),
       ],
       child: MaterialApp(
         title: 'Školski raspored',

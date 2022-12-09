@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
+import 'package:web_app_timetable/providers/ucionice_notifier.dart';
 
+import '../../providers/predmeti_notifier.dart';
 import '../../shared/theme/colors.dart';
-import '../predmetView/predmet_view.dart';
+import '../predmetiView/predmeti_view.dart';
+import '../ucioniceView.dart/ucionice_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -14,6 +17,13 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+  @override
+  void initState() {
+    Provider.of<PredmetiNotifier>(context, listen: false).getPredmeti();
+    Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,6 +127,9 @@ class _DashboardViewState extends State<DashboardView> {
               builder: (context, tabNotifier, child) {
                 if (tabNotifier.selectedTab == AppTab.predmeti) {
                   return const PredmetiView();
+                }
+                if (tabNotifier.selectedTab == AppTab.ucionice) {
+                  return const UcioniceView();
                 }
                 return Container();
               },
