@@ -20,10 +20,13 @@ class UcioniceClient {
     List codedUcionice = decoded["data"];
 
     for (var element in codedUcionice) {
-      ucionice.add(Ucionica(
+      ucionice.add(
+        Ucionica(
           id: UcionicaId(value: element['id']),
           naslov: element['naziv'],
-          skolaId: SkolaId(value: element['skola_id'])));
+          skolaId: SkolaId(value: element['skola_id']),
+        ),
+      );
     }
 
     return ucionice;

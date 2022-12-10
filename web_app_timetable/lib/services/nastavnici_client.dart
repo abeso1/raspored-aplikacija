@@ -20,10 +20,13 @@ class NastavniciClient {
     List codedNastavnici = decoded["data"];
 
     for (var element in codedNastavnici) {
-      nastavnici.add(Nastavnik(
+      nastavnici.add(
+        Nastavnik(
           id: NastavnikId(value: element['id']),
           naslov: element['naziv'],
-          skolaId: SkolaId(value: element['skola_id'])));
+          skolaId: SkolaId(value: element['skola_id']),
+        ),
+      );
     }
 
     return nastavnici;

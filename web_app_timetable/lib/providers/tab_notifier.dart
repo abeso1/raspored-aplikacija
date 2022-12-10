@@ -9,6 +9,7 @@ class TabNotifier extends ChangeNotifier {
     AppTab.odjeljenja: 'Odjeljenja',
     AppTab.predmeti: 'Predmeti',
     AppTab.ucionice: 'Učionice',
+    AppTab.termini: 'Termini',
   };
 
   setSelectedTab(AppTab tab) {
@@ -17,10 +18,4 @@ class TabNotifier extends ChangeNotifier {
   }
 }
 
-enum AppTab {
-  raspored,
-  profesori,
-  odjeljenja,
-  predmeti,
-  ucionice,
-}
+enum AppTab { raspored, profesori, odjeljenja, predmeti, ucionice, termini }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
+import 'package:web_app_timetable/providers/termini_notifier.dart';
 
 import 'package:web_app_timetable/shared/theme/colors.dart';
 import 'package:web_app_timetable/views/wrapper/wrapper.dart';
@@ -30,6 +31,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider.value(value: UcioniceNotifier()),
         ChangeNotifierProvider.value(value: NastavniciNotifier()),
         ChangeNotifierProvider.value(value: GrupeNotifier()),
+        ChangeNotifierProvider.value(value: TerminiNotifier()),
       ],
       child: MaterialApp(
         title: 'Školski raspored',

@@ -20,15 +20,14 @@ class GrupeClient {
     List codedGrupe = decoded["data"];
 
     for (var element in codedGrupe) {
-      grupe.add(Grupa(
+      grupe.add(
+        Grupa(
           id: GrupaId(value: element['id']),
           naslov: element['naziv'],
-          skolaId: SkolaId(value: element['skola_id'])));
+          skolaId: SkolaId(value: element['skola_id']),
+        ),
+      );
     }
-
-    http.get(
-      Uri.parse("$backendUrl/predavanje"),
-    );
 
     return grupe;
   }

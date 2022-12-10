@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
+import 'package:web_app_timetable/providers/termini_notifier.dart';
 import 'package:web_app_timetable/providers/ucionice_notifier.dart';
 
 import '../../providers/grupe_notifier.dart';
@@ -11,6 +12,7 @@ import '../../shared/theme/colors.dart';
 import '../grupe/grupe_view.dart';
 import '../nastavnici/nastavnici_view.dart';
 import '../predmeti/predmeti_view.dart';
+import '../termini/termini_view.dart';
 import '../ucionice/ucionice_view.dart';
 
 class DashboardView extends StatefulWidget {
@@ -27,6 +29,7 @@ class _DashboardViewState extends State<DashboardView> {
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
     Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
     Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
+    Provider.of<TerminiNotifier>(context, listen: false).getTermini();
     super.initState();
   }
 
@@ -142,6 +145,9 @@ class _DashboardViewState extends State<DashboardView> {
                 }
                 if (tabNotifier.selectedTab == AppTab.odjeljenja) {
                   return const GrupeView();
+                }
+                if (tabNotifier.selectedTab == AppTab.termini) {
+                  return const TerminiView();
                 }
                 return Container();
               },

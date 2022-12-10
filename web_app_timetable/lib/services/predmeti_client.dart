@@ -20,10 +20,13 @@ class PredmetiClient {
     List codedPredmeti = decoded["data"];
 
     for (var element in codedPredmeti) {
-      predmeti.add(Predmet(
+      predmeti.add(
+        Predmet(
           id: PredmetId(value: element['id']),
           naslov: element['naslov'],
-          skolaId: SkolaId(value: element['skola_id'])));
+          skolaId: SkolaId(value: element['skola_id']),
+        ),
+      );
     }
 
     return predmeti;
