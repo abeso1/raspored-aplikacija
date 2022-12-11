@@ -10,6 +10,7 @@ class Termin {
   final TimeOfDay kraj;
   final SkolaId skolaId;
   final int smjena;
+  final bool show;
 
   Termin({
     required this.id,
@@ -18,5 +19,10 @@ class Termin {
     required this.pocetak,
     required this.skolaId,
     required this.smjena,
+    this.show = true,
   });
+}
+
+String timeOfDayToString(TimeOfDay timeOfDay) {
+  return timeOfDay.toString().replaceAll('TimeOfDay(', '').replaceAll(')', '');
 }

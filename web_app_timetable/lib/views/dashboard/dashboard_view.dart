@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
+import 'package:web_app_timetable/providers/nastavni_plan_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
 import 'package:web_app_timetable/providers/termini_notifier.dart';
 import 'package:web_app_timetable/providers/ucionice_notifier.dart';
@@ -29,7 +30,8 @@ class _DashboardViewState extends State<DashboardView> {
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
     Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
     Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
-    Provider.of<TerminiNotifier>(context, listen: false).getTermini();
+    //Provider.of<TerminiNotifier>(context, listen: false).getTermini();
+    Provider.of<NastavniPlanNotifier>(context, listen: false).getNastavniPlan();
     super.initState();
   }
 
