@@ -296,10 +296,10 @@ class _TerminiViewState extends State<TerminiView> {
                                                       horizontal: 10),
                                                   padding:
                                                       const EdgeInsets.all(10),
-                                                  decoration: !termin.show
+                                                  decoration: !termin.show!
                                                       ? null
                                                       : BoxDecoration(
-                                                          color: termin.show
+                                                          color: termin.show!
                                                               ? Colors.white
                                                               : Colors
                                                                   .transparent,
@@ -310,7 +310,7 @@ class _TerminiViewState extends State<TerminiView> {
                                                               width: 1,
                                                               color: const Color(
                                                                   0xffe7e7e7))),
-                                                  child: !termin.show
+                                                  child: !termin.show!
                                                       ? null
                                                       : Column(
                                                           crossAxisAlignment:
