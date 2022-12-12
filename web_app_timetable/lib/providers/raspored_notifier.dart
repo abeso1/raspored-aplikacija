@@ -40,10 +40,6 @@ class RasporedNotifier extends ChangeNotifier {
   Map<Ucionica, Map<Dan, List<Raspored>>> mappedByUcionica = {};
   Map<NastavnikId, Map<Dan, List<Raspored>>> mappedByNastavnici = {};
 
-  Map<GrupaId, RasporedSettings> rasporedSettingsPerGrupe = {};
-  Map<NastavnikId, RasporedSettings> rasporedSettingsPerNastavnik = {};
-  Map<Ucionica, RasporedSettings> rasporedSettingsPerUcionica = {};
-
   TimeOfDay? najraniji;
   TimeOfDay? najkasniji;
 
@@ -170,72 +166,6 @@ class RasporedNotifier extends ChangeNotifier {
       });
     });
 
-    mappedByGrupe.forEach((grupaId, rasporedPoDanu) {
-      TimeOfDay? najraniji;
-      TimeOfDay? najkasniji;
-      rasporedPoDanu.forEach((dan, raspored) {
-        if (raspored.isNotEmpty) {
-          if (najraniji == null) {
-            najraniji ??= raspored.first.termin.pocetak;
-            najkasniji ??= raspored.last.termin.kraj;
-          }
-          if (raspored.first.termin.pocetak.hour < najraniji!.hour) {
-            najraniji = raspored.first.termin.pocetak;
-          }
-          if (raspored.last.termin.kraj.hour > najkasniji!.hour) {
-            najkasniji = raspored.last.termin.kraj;
-          }
-        }
-      });
-
-      rasporedSettingsPerGrupe[grupaId] =
-          RasporedSettings(najraniji: najraniji, najkasniji: najkasniji);
-    });
-
-    mappedByNastavnici.forEach((nastavnikId, rasporedPoDanu) {
-      TimeOfDay? najraniji;
-      TimeOfDay? najkasniji;
-      rasporedPoDanu.forEach((dan, raspored) {
-        if (raspored.isNotEmpty) {
-          if (najraniji == null) {
-            najraniji ??= raspored.first.termin.pocetak;
-            najkasniji ??= raspored.last.termin.kraj;
-          }
-          if (raspored.first.termin.pocetak.hour < najraniji!.hour) {
-            najraniji = raspored.first.termin.pocetak;
-          }
-          if (raspored.last.termin.kraj.hour > najkasniji!.hour) {
-            najkasniji = raspored.last.termin.kraj;
-          }
-        }
-      });
-
-      rasporedSettingsPerNastavnik[nastavnikId] =
-          RasporedSettings(najraniji: najraniji, najkasniji: najkasniji);
-    });
-
-    mappedByUcionica.forEach((ucionica, rasporedPoDanu) {
-      TimeOfDay? najraniji;
-      TimeOfDay? najkasniji;
-      rasporedPoDanu.forEach((dan, raspored) {
-        if (raspored.isNotEmpty) {
-          if (najraniji == null) {
-            najraniji ??= raspored.first.termin.pocetak;
-            najkasniji ??= raspored.last.termin.kraj;
-          }
-          if (raspored.first.termin.pocetak.hour < najraniji!.hour) {
-            najraniji = raspored.first.termin.pocetak;
-          }
-          if (raspored.last.termin.kraj.hour > najkasniji!.hour) {
-            najkasniji = raspored.last.termin.kraj;
-          }
-        }
-      });
-
-      rasporedSettingsPerUcionica[ucionica] =
-          RasporedSettings(najraniji: najraniji, najkasniji: najkasniji);
-    });
-
     Map<Ucionica, Map<Dan, List<Raspored>>> mappedByUcionicaCopy =
         Map.from(mappedByUcionica);
 
@@ -250,10 +180,8 @@ class RasporedNotifier extends ChangeNotifier {
       rasporedPoDanu.forEach((dan, raspored) {
         for (var i = 0; i < raspored.length; i++) {
           if (i == 0 &&
-              (rasporedSettingsPerUcionica[ucionica]!.najraniji!.hour !=
-                      raspored.first.termin.pocetak.hour ||
-                  rasporedSettingsPerUcionica[ucionica]!.najraniji!.minute !=
-                      raspored.first.termin.pocetak.minute)) {
+              (najraniji!.hour != raspored.first.termin.pocetak.hour ||
+                  najraniji!.minute != raspored.first.termin.pocetak.minute)) {
             unshowableRaspored[dan]!.add(
               Raspored(
                   id: RasporedId(value: -1),
@@ -261,8 +189,7 @@ class RasporedNotifier extends ChangeNotifier {
                   nastavnikId: NastavnikId(value: -1),
                   grupaId: GrupaId(value: -1),
                   termin: Termin(
-                      pocetak:
-                          rasporedSettingsPerUcionica[ucionica]!.najraniji!,
+                      pocetak: najraniji!,
                       kraj: raspored.first.termin.pocetak,
                       dan: dan,
                       id: TerminId(value: -1),
@@ -317,10 +244,8 @@ class RasporedNotifier extends ChangeNotifier {
       rasporedPoDanu.forEach((dan, raspored) {
         for (var i = 0; i < raspored.length; i++) {
           if (i == 0 &&
-              (rasporedSettingsPerGrupe[grupaId]!.najraniji!.hour !=
-                      raspored.first.termin.pocetak.hour ||
-                  rasporedSettingsPerGrupe[grupaId]!.najraniji!.minute !=
-                      raspored.first.termin.pocetak.minute)) {
+              (najraniji!.hour != raspored.first.termin.pocetak.hour ||
+                  najraniji!.minute != raspored.first.termin.pocetak.minute)) {
             unshowableRaspored[dan]!.add(
               Raspored(
                   id: RasporedId(value: -1),
@@ -328,7 +253,7 @@ class RasporedNotifier extends ChangeNotifier {
                   nastavnikId: NastavnikId(value: -1),
                   grupaId: GrupaId(value: -1),
                   termin: Termin(
-                      pocetak: rasporedSettingsPerGrupe[grupaId]!.najraniji!,
+                      pocetak: najraniji!,
                       kraj: raspored.first.termin.pocetak,
                       dan: dan,
                       id: TerminId(value: -1),
@@ -383,12 +308,8 @@ class RasporedNotifier extends ChangeNotifier {
       rasporedPoDanu.forEach((dan, raspored) {
         for (var i = 0; i < raspored.length; i++) {
           if (i == 0 &&
-              (rasporedSettingsPerNastavnik[nastavnikId]!.najraniji!.hour !=
-                      raspored.first.termin.pocetak.hour ||
-                  rasporedSettingsPerNastavnik[nastavnikId]!
-                          .najraniji!
-                          .minute !=
-                      raspored.first.termin.pocetak.minute)) {
+              (najraniji!.hour != raspored.first.termin.pocetak.hour ||
+                  najraniji!.minute != raspored.first.termin.pocetak.minute)) {
             unshowableRaspored[dan]!.add(
               Raspored(
                   id: RasporedId(value: -1),
@@ -396,8 +317,7 @@ class RasporedNotifier extends ChangeNotifier {
                   nastavnikId: NastavnikId(value: -1),
                   grupaId: GrupaId(value: -1),
                   termin: Termin(
-                      pocetak:
-                          rasporedSettingsPerNastavnik[nastavnikId]!.najraniji!,
+                      pocetak: najraniji!,
                       kraj: raspored.first.termin.pocetak,
                       dan: dan,
                       id: TerminId(value: -1),

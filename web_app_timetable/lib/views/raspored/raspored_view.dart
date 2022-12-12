@@ -405,24 +405,8 @@ class RasporedWidget extends StatelessWidget {
                               children: [
                                 Builder(builder: (context) {
                                   List<String> sati = [];
-                                  RasporedSettings settings = rasporedNotifier
-                                              .rasporedType ==
-                                          RasporedType.grupa
-                                      ? rasporedNotifier
-                                              .rasporedSettingsPerGrupe[
-                                          rasporedNotifier.selectedGrupa]!
-                                      : rasporedNotifier.rasporedType ==
-                                              RasporedType.ucionica
-                                          ? rasporedNotifier
-                                                  .rasporedSettingsPerUcionica[
-                                              rasporedNotifier
-                                                  .selectedUcionica]!
-                                          : rasporedNotifier
-                                                  .rasporedSettingsPerNastavnik[
-                                              rasporedNotifier
-                                                  .selectedNastavnik]!;
-                                  for (var i = settings.najraniji!.hour;
-                                      i <= settings.najkasniji!.hour;
+                                  for (var i = rasporedNotifier.najraniji!.hour;
+                                      i <= rasporedNotifier.najkasniji!.hour;
                                       i++) {
                                     sati.add("$i:00");
                                   }
