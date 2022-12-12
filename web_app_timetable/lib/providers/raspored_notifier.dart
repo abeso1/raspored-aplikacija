@@ -9,7 +9,6 @@ import 'package:web_app_timetable/models/ucionica/ucionica.dart';
 import 'package:web_app_timetable/services/raspored_client.dart';
 import '../models/predmet/predmet_id.dart';
 import '../models/raspored/raspored.dart';
-import '../models/raspored/raspored_settings.dart';
 import '../models/skola/skola_id.dart';
 import '../models/termin/dan.dart';
 import '../models/termin/termin_id.dart';
@@ -421,5 +420,5 @@ enum RasporedType {
 Map<RasporedType, String> rasporedTypeMappedToBosanski = {
   RasporedType.grupa: 'Po odjeljenjima',
   RasporedType.ucionica: 'Po učionicama',
-  RasporedType.nastavnik: 'Po nastavnicima',
+  RasporedType.nastavnik: 'Po profesorima',
 };

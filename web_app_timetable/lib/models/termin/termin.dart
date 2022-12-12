@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:web_app_timetable/models/skola/skola_id.dart';
 import 'package:web_app_timetable/models/termin/dan.dart';
 import 'package:web_app_timetable/models/termin/termin_id.dart';
@@ -60,5 +61,6 @@ Termin terminFromJson(Map json) {
 }
 
 String timeOfDayToString(TimeOfDay timeOfDay) {
-  return timeOfDay.toString().replaceAll('TimeOfDay(', '').replaceAll(')', '');
+  DateTime dateTime = DateTime(2022, 1, 1, timeOfDay.hour, timeOfDay.minute);
+  return DateFormat('HH:mm').format(dateTime);
 }

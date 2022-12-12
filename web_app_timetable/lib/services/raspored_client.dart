@@ -1,6 +1,6 @@
-import 'dart:convert';
+//import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 class RasporedClient {
   Future<String?> createRaspored({
@@ -9,7 +9,7 @@ class RasporedClient {
     required List<Map<String, int>> lessonList,
   }) async {
     try {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       /*print(jsonEncode(
         {
           'timeslotList': timeslotList,
@@ -2556,9 +2556,8 @@ class RasporedClient {
 }
 ''';
       //}
-      return null;
+      //return null;
     } catch (e) {
-      print(e);
       return null;
     }
   }
