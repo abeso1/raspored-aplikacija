@@ -24,4 +24,10 @@ class NastavniPlanNotifier extends ChangeNotifier {
   _setNastavniPlan(List<Plan> nastavniPlanLocal) {
     nastavniPlan = nastavniPlanLocal;
   }
+
+  addPlan(Plan plan) {
+    nastavniPlan.add(plan);
+    unfilteredNastavniPlan.add(plan);
+    notifyListeners();
+  }
 }

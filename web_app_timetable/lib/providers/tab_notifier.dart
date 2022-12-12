@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TabNotifier extends ChangeNotifier {
-  AppTab selectedTab = AppTab.termini;
+  AppTab selectedTab = AppTab.nastavniplan;
 
   Map<AppTab, String> tabNames = {
     AppTab.raspored: 'Raspored',
@@ -10,6 +10,7 @@ class TabNotifier extends ChangeNotifier {
     AppTab.predmeti: 'Predmeti',
     AppTab.ucionice: 'Učionice',
     AppTab.termini: 'Termini',
+    AppTab.nastavniplan: 'Nastavni plan',
   };
 
   setSelectedTab(AppTab tab) {
@@ -18,4 +19,12 @@ class TabNotifier extends ChangeNotifier {
   }
 }
 
-enum AppTab { raspored, profesori, odjeljenja, predmeti, ucionice, termini }
+enum AppTab {
+  raspored,
+  profesori,
+  odjeljenja,
+  predmeti,
+  ucionice,
+  termini,
+  nastavniplan
+}

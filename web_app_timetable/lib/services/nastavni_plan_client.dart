@@ -36,4 +36,24 @@ class NastavniPlanClient {
 
     return nastavniPlan;
   }
+
+  Future<bool> addNastavniPlan(final PredmetId predmetId, final GrupaId grupaId,
+      final NastavnikId nastavnikId, final int brojCasova) async {
+    var response = await http.post(Uri.parse("$backendUrl/predavanje"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "predmet_id": predmetId.value,
+          "nastavnik_id": nastavnikId.value,
+          "grupa_id": grupaId.value,
+          "broj_casova": brojCasova,
+          "skola_id": 1
+        }));
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

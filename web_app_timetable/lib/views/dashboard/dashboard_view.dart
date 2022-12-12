@@ -5,6 +5,7 @@ import 'package:web_app_timetable/providers/nastavni_plan_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
 import 'package:web_app_timetable/providers/termini_notifier.dart';
 import 'package:web_app_timetable/providers/ucionice_notifier.dart';
+import 'package:web_app_timetable/views/nastavni_plan/nastavni_plan_view.dart';
 
 import '../../providers/grupe_notifier.dart';
 import '../../providers/nastavnici_notifier.dart';
@@ -30,7 +31,7 @@ class _DashboardViewState extends State<DashboardView> {
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
     Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
     Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
-    //Provider.of<TerminiNotifier>(context, listen: false).getTermini();
+    Provider.of<TerminiNotifier>(context, listen: false).getTermini();
     Provider.of<NastavniPlanNotifier>(context, listen: false).getNastavniPlan();
     super.initState();
   }
@@ -41,97 +42,114 @@ class _DashboardViewState extends State<DashboardView> {
       backgroundColor: const Color(0xfff5f5f5),
       body: Column(
         children: [
-          Container(
-            height: 100,
-            color: Colors.white,
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(width: 65),
-                  Row(
-                    children: [
-                      Text(
-                        'ŠKOLSKI',
-                        style: TextStyle(
-                            color: AppColors.mainGreen,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'RASPORED',
-                        style: TextStyle(
-                            color: Color(0xff333333),
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 15),
-                  const Spacer(),
-                  Consumer<TabNotifier>(
-                    builder: (context, tabNotifier, child) {
-                      return Row(
-                        children: AppTab.values
-                            .map((final tab) => Padding(
-                                  padding: EdgeInsets.only(
-                                    right: AppTab.values.first == tab ? 90 : 30,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      tabNotifier.setSelectedTab(tab);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 3, vertical: 15),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            width: 4,
-                                            color:
-                                                tabNotifier.selectedTab == tab
-                                                    ? AppColors.mainGreen
-                                                    : Colors.white,
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 100,
+                  color: Colors.white,
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 50),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'ŠKOLSKI',
+                                  style: TextStyle(
+                                      color: AppColors.mainGreen,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                  'RASPORED',
+                                  style: TextStyle(
+                                      color: Color(0xff333333),
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Consumer<TabNotifier>(
+                            builder: (context, tabNotifier, child) {
+                              return Row(
+                                children: AppTab.values
+                                    .map((final tab) => Padding(
+                                          padding: EdgeInsets.only(
+                                            right: AppTab.values.first == tab
+                                                ? 90
+                                                : 30,
                                           ),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        tabNotifier.tabNames[tab]!,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              tabNotifier.setSelectedTab(tab);
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 3,
+                                                      vertical: 15),
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    width: 4,
+                                                    color: tabNotifier
+                                                                .selectedTab ==
+                                                            tab
+                                                        ? AppColors.mainGreen
+                                                        : Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                tabNotifier.tabNames[tab]!,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ))
+                                    .toList(),
+                              );
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 50),
+                            child: InkWell(
+                              onTap: () {
+                                Provider.of<AuthNotifier>(context,
+                                        listen: false)
+                                    .logout();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 3, vertical: 15),
+                                child: const Text(
+                                  'Odjavi se',
+                                  style: TextStyle(
+                                    fontSize: 16,
                                   ),
-                                ))
-                            .toList(),
-                      );
-                    },
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      Provider.of<AuthNotifier>(context, listen: false)
-                          .logout();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 15),
-                      child: const Text(
-                        'Odjavi se',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  const SizedBox(width: 65),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
           Expanded(
             child: Consumer<TabNotifier>(
@@ -150,6 +168,9 @@ class _DashboardViewState extends State<DashboardView> {
                 }
                 if (tabNotifier.selectedTab == AppTab.termini) {
                   return const TerminiView();
+                }
+                if (tabNotifier.selectedTab == AppTab.nastavniplan) {
+                  return const NastavniPlanView();
                 }
                 return Container();
               },

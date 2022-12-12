@@ -8,6 +8,7 @@ import 'package:web_app_timetable/providers/termini_notifier.dart';
 import 'package:web_app_timetable/shared/theme/colors.dart';
 import 'package:web_app_timetable/views/wrapper/wrapper.dart';
 
+import 'providers/add_nastavni_plan_notifier.dart';
 import 'providers/grupe_notifier.dart';
 import 'providers/nastavnici_notifier.dart';
 import 'providers/predmeti_notifier.dart';
@@ -34,6 +35,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider.value(value: GrupeNotifier()),
         ChangeNotifierProvider.value(value: TerminiNotifier()),
         ChangeNotifierProvider.value(value: NastavniPlanNotifier()),
+        ChangeNotifierProvider.value(value: AddNastavniPlanNotifier()),
       ],
       child: MaterialApp(
         title: 'Školski raspored',

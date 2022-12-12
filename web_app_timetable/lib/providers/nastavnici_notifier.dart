@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_app_timetable/models/nastavnik/nastavnik.dart';
+import 'package:web_app_timetable/models/nastavnik/nastavnik_id.dart';
 import 'package:web_app_timetable/services/nastavnici_client.dart';
 
 Map nastavniciSort = {
@@ -12,6 +13,7 @@ class NastavniciNotifier extends ChangeNotifier {
   bool getNastavniciLoading = true;
   bool nastavniciFiltered = false;
   List<Nastavnik> nastavnici = [];
+  Map<NastavnikId, Nastavnik> nastavniciMapped = {};
   List<Nastavnik> unfilteredNastavnici = [];
   NastavniciSort nastavniciSort = NastavniciSort.atoz;
   String nastavnikFilter = '';
@@ -50,6 +52,9 @@ class NastavniciNotifier extends ChangeNotifier {
                 .contains(nastavnikFilter.toLowerCase()) ||
             nastavnikFilter.isEmpty)
         .toList();
+    for (var nastavnik in nastavniciLocal) {
+      nastavniciMapped[nastavnik.id] = nastavnik;
+    }
     nastavnici.sort((a, b) {
       if (nastavniciSort == NastavniciSort.atoz) {
         return a.naslov.compareTo(b.naslov);
