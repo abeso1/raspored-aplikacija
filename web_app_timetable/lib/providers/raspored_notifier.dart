@@ -44,6 +44,9 @@ class RasporedNotifier extends ChangeNotifier {
   Map<NastavnikId, RasporedSettings> rasporedSettingsPerNastavnik = {};
   Map<Ucionica, RasporedSettings> rasporedSettingsPerUcionica = {};
 
+  TimeOfDay? najraniji;
+  TimeOfDay? najkasniji;
+
   Future<void> createRaspored() async {
     getRasporedError = false;
     List<Map<String, String>> timeslotList = terminiNotifier.getTimeslotList();
@@ -70,6 +73,17 @@ class RasporedNotifier extends ChangeNotifier {
     termini = [];
     for (var termin in decodedTermini) {
       termini.add(terminFromJson(termin));
+    }
+
+    for (var termin in termini) {
+      najraniji ??= termin.pocetak;
+      najkasniji ??= termin.kraj;
+      if (termin.pocetak.hour < najraniji!.hour) {
+        najraniji = termin.pocetak;
+      }
+      if (termin.kraj.hour > najkasniji!.hour) {
+        najkasniji = termin.kraj;
+      }
     }
 
     List decodedUcionice = decoded['roomList'];
