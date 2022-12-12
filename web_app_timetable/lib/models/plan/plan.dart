@@ -20,4 +20,17 @@ class Plan {
     required this.brojCasova,
     required this.skolaId,
   });
+
+  List<Map<String, int>> toJsonList() {
+    List<Map<String, int>> list = [];
+    for (var i = 1; i <= brojCasova; i++) {
+      list.add({
+        'id': int.parse(id.value.toString() + i.toString()),
+        'subject': predmetId.value,
+        'teacher': nastavnikId.value,
+        'studentGroup': grupaId.value,
+      });
+    }
+    return list;
+  }
 }

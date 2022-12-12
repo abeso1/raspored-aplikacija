@@ -12,4 +12,10 @@ class Ucionica {
     required this.naslov,
     required this.skolaId,
   });
+
+  Map<String, String> toJson() {
+    return {
+      'name': naslov,
+    };
+  }
 }

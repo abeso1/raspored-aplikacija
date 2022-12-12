@@ -10,68 +10,7 @@ class TerminiNotifier extends ChangeNotifier {
   bool getTerminiError = false;
   bool getTerminiLoading = true;
   List<Termin> termini = [];
-  List<Termin> unfilteredTermini = [
-    /*Termin(
-        id: TerminId(value: 1),
-        dan: Dan.ponedjeljak,
-        kraj: const TimeOfDay(hour: 9, minute: 0),
-        pocetak: const TimeOfDay(
-          hour: 8,
-          minute: 0,
-        ),
-        skolaId: SkolaId(value: 1),
-        smjena: 1),
-    Termin(
-        id: TerminId(value: 2),
-        dan: Dan.utorak,
-        kraj: const TimeOfDay(hour: 11, minute: 0),
-        pocetak: const TimeOfDay(
-          hour: 10,
-          minute: 0,
-        ),
-        skolaId: SkolaId(value: 1),
-        smjena: 1),
-    Termin(
-        id: TerminId(value: 3),
-        dan: Dan.srijeda,
-        kraj: const TimeOfDay(hour: 13, minute: 0),
-        pocetak: const TimeOfDay(
-          hour: 12,
-          minute: 0,
-        ),
-        skolaId: SkolaId(value: 1),
-        smjena: 1),
-    Termin(
-        id: TerminId(value: 1),
-        dan: Dan.cetvrtak,
-        kraj: const TimeOfDay(hour: 14, minute: 0),
-        pocetak: const TimeOfDay(
-          hour: 12,
-          minute: 0,
-        ),
-        skolaId: SkolaId(value: 1),
-        smjena: 1),
-    Termin(
-        id: TerminId(value: 1),
-        dan: Dan.ponedjeljak,
-        kraj: const TimeOfDay(hour: 14, minute: 0),
-        pocetak: const TimeOfDay(
-          hour: 13,
-          minute: 0,
-        ),
-        skolaId: SkolaId(value: 1),
-        smjena: 1),
-    Termin(
-        id: TerminId(value: 1),
-        dan: Dan.petak,
-        kraj: const TimeOfDay(hour: 14, minute: 0),
-        pocetak: const TimeOfDay(
-          hour: 13,
-          minute: 0,
-        ),
-        skolaId: SkolaId(value: 1),
-        smjena: 1),*/
-  ];
+  List<Termin> unfilteredTermini = [];
   TimeOfDay? najraniji;
   TimeOfDay? najkasniji;
   List<String>? sati;
@@ -183,4 +122,8 @@ class TerminiNotifier extends ChangeNotifier {
   }
 
   int _timeOfDayToInt(TimeOfDay myTime) => myTime.hour * 60 + myTime.minute;
+
+  List<Map<String, String>> getTimeslotList() {
+    return unfilteredTermini.map((termin) => termin.toJson()).toList();
+  }
 }

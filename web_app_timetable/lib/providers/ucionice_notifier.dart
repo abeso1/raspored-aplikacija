@@ -57,6 +57,10 @@ class UcioniceNotifier extends ChangeNotifier {
       return b.naslov.compareTo(a.naslov);
     });
   }
+
+  List<Map<String, String>> getRoomList() {
+    return unfilteredUcionice.map((ucionica) => ucionica.toJson()).toList();
+  }
 }
 
 enum UcioniceSort {

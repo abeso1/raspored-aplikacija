@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TabNotifier extends ChangeNotifier {
-  AppTab selectedTab = AppTab.nastavniplan;
+  AppTab selectedTab = AppTab.raspored;
 
   Map<AppTab, String> tabNames = {
     AppTab.raspored: 'Raspored',

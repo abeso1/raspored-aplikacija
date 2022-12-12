@@ -21,6 +21,14 @@ class Termin {
     required this.smjena,
     this.show = true,
   });
+
+  Map<String, String> toJson() {
+    return {
+      'dayOfWeek': daniMappedNaEngleski[dan]!,
+      'startTime': '${timeOfDayToString(pocetak)}:00',
+      'endTime': '${timeOfDayToString(kraj)}:00',
+    };
+  }
 }
 
 String timeOfDayToString(TimeOfDay timeOfDay) {

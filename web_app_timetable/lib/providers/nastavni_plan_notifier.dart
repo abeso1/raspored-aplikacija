@@ -30,4 +30,13 @@ class NastavniPlanNotifier extends ChangeNotifier {
     unfilteredNastavniPlan.add(plan);
     notifyListeners();
   }
+
+  List<Map<String, int>> getLessonList() {
+    List<Map<String, int>> planovi = [];
+    for (var plan in unfilteredNastavniPlan) {
+      planovi.addAll(plan.toJsonList());
+    }
+
+    return planovi;
+  }
 }

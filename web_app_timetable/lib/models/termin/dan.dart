@@ -21,3 +21,11 @@ Map<Dan, String> daniMappedNaBosanski = {
   Dan.cetvrtak: 'Četvrtak',
   Dan.petak: 'Petak'
 };
+
+Map<Dan, String> daniMappedNaEngleski = {
+  Dan.ponedjeljak: 'MONDAY',
+  Dan.utorak: 'TUESDAY',
+  Dan.srijeda: 'WEDNESDAY',
+  Dan.cetvrtak: 'THURSDAY',
+  Dan.petak: 'FRIDAY'
+};

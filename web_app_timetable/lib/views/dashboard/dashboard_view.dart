@@ -6,6 +6,7 @@ import 'package:web_app_timetable/providers/tab_notifier.dart';
 import 'package:web_app_timetable/providers/termini_notifier.dart';
 import 'package:web_app_timetable/providers/ucionice_notifier.dart';
 import 'package:web_app_timetable/views/nastavni_plan/nastavni_plan_view.dart';
+import 'package:web_app_timetable/views/raspored/raspored_view.dart';
 
 import '../../providers/grupe_notifier.dart';
 import '../../providers/nastavnici_notifier.dart';
@@ -154,25 +155,28 @@ class _DashboardViewState extends State<DashboardView> {
           Expanded(
             child: Consumer<TabNotifier>(
               builder: (context, tabNotifier, child) {
-                if (tabNotifier.selectedTab == AppTab.predmeti) {
-                  return const PredmetiView();
+                switch (tabNotifier.selectedTab) {
+                  case AppTab.predmeti:
+                    return const PredmetiView();
+
+                  case AppTab.ucionice:
+                    return const UcioniceView();
+
+                  case AppTab.profesori:
+                    return const NastavniciView();
+
+                  case AppTab.odjeljenja:
+                    return const GrupeView();
+
+                  case AppTab.termini:
+                    return const TerminiView();
+
+                  case AppTab.nastavniplan:
+                    return const NastavniPlanView();
+
+                  case AppTab.raspored:
+                    return const RasporedView();
                 }
-                if (tabNotifier.selectedTab == AppTab.ucionice) {
-                  return const UcioniceView();
-                }
-                if (tabNotifier.selectedTab == AppTab.profesori) {
-                  return const NastavniciView();
-                }
-                if (tabNotifier.selectedTab == AppTab.odjeljenja) {
-                  return const GrupeView();
-                }
-                if (tabNotifier.selectedTab == AppTab.termini) {
-                  return const TerminiView();
-                }
-                if (tabNotifier.selectedTab == AppTab.nastavniplan) {
-                  return const NastavniPlanView();
-                }
-                return Container();
               },
             ),
           ),
