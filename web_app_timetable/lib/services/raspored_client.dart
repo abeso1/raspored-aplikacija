@@ -6,14 +6,13 @@ import 'package:http/http.dart' as http;
 
 // TODO(amer): dodati for loop da getta dok ne dobije pun raspored
 class RasporedClient {
-  //Future<Uint8List?>
-  Future<String?> createRaspored({
+  Future<Uint8List?> createRaspored({
     required List<Map<String, String>> timeslotList,
     required List<Map<String, String>> roomList,
     required List<Map<String, int>> lessonList,
   }) async {
     try {
-      /*var response = await http
+      var response = await http
           .post(
             Uri.parse("https://logic.leftjoin.ba/timeTable/solve"),
             headers: {
@@ -27,8 +26,8 @@ class RasporedClient {
               },
             ),
           )
-          .timeout(const Duration(minutes: 10));*/
-
+          .timeout(const Duration(minutes: 10));
+/*
       return '''
 {
     "timeslotList": [
@@ -2552,10 +2551,10 @@ class RasporedClient {
     "score": "0hard/0soft"
 }
 ''';
-
-      //if (response.statusCode == 200) {
-      //  return response.bodyBytes;
-      //}
+*/
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
       return null;
     } catch (e) {
       debugPrint(e.toString());

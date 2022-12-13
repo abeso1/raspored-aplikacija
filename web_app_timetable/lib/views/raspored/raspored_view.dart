@@ -6,7 +6,7 @@ import 'package:web_app_timetable/providers/nastavnici_notifier.dart';
 import 'package:web_app_timetable/providers/predmeti_notifier.dart';
 import 'package:web_app_timetable/providers/raspored_notifier.dart';
 import 'package:web_app_timetable/shared/widgets/loader.dart';
-import 'package:web_app_timetable/views/raspored/pdf_view.dart';
+import 'package:web_app_timetable/services/pdf_service.dart';
 
 import '../../models/termin/dan.dart';
 import '../../models/termin/termin.dart';
@@ -439,7 +439,7 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                                   width: 100,
                                   child: InkWell(
                                     onTap: () {
-                                      PdfView().generateReport(
+                                      PdfService().generateReport(
                                         rasporedType:
                                             rasporedNotifier.rasporedType,
                                         najkasniji:

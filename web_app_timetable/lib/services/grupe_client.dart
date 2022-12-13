@@ -31,4 +31,10 @@ class GrupeClient {
 
     return grupe;
   }
+
+  Future<void> removeGrupa(int grupaId) async {
+    await http.delete(
+      Uri.parse("$backendUrl/grupa/$grupaId"),
+    );
+  }
 }

@@ -63,6 +63,15 @@ class PredmetiNotifier extends ChangeNotifier {
       return b.naslov.compareTo(a.naslov);
     });
   }
+
+  removePredmet(PredmetId predmetId) async {
+    try {
+      await PredmetiClient().removePredmet(predmetId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getPredmeti();
+  }
 }
 
 enum PredmetiSort {

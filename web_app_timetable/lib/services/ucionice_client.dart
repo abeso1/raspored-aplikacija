@@ -31,4 +31,10 @@ class UcioniceClient {
 
     return ucionice;
   }
+
+  Future<void> removeUcionica(int ucionicaId) async {
+    await http.delete(
+      Uri.parse("$backendUrl/ucionica/$ucionicaId"),
+    );
+  }
 }

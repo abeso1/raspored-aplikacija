@@ -148,7 +148,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                       ),
                                       const SizedBox(height: 24),
                                       const Text(
-                                        'Unesite naziv predmeta koji želite dodati',
+                                        'Unesite naziv profesora kojeg želite dodati',
                                         style: TextStyle(
                                           fontSize: 16,
                                         ),
@@ -172,7 +172,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                           ),
                                         ),
                                         onChanged: (value) => nastavniciNotifier
-                                            .setPredmetDialog(value),
+                                            .setNastavnikDialog(value),
                                       ),
                                       const Spacer(),
                                       Row(
@@ -203,13 +203,12 @@ class _NastavniciViewState extends State<NastavniciView> {
                                             flex: 2,
                                             child: InkWell(
                                               onTap: nastavniciNotifier
-                                                          .predmetDialog !=
+                                                          .nastavnikDialog !=
                                                       null
                                                   ? () async {
                                                       ReusableLoader.showLoader(
                                                           context);
-                                                      await nastavniciNotifier
-                                                          .addPredmet();
+
                                                       ReusableLoader
                                                           .popLoader();
                                                       // ignore: use_build_context_synchronously
@@ -222,7 +221,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                                   borderRadius:
                                                       BorderRadius.circular(3),
                                                   color: nastavniciNotifier
-                                                              .predmetDialog !=
+                                                              .nastavnikDialog !=
                                                           null
                                                       ? AppColors.mainGreen
                                                       : const Color(0xff8d8d8d),
@@ -230,7 +229,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                                 height: 50,
                                                 child: const Center(
                                                   child: Text(
-                                                    'Dodaj nastavni plan',
+                                                    'Dodaj profesora',
                                                     style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w600,
@@ -395,14 +394,15 @@ class _NastavniciViewState extends State<NastavniciView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                const Icon(
-                                  Icons.delete,
-                                  color: Color(0xff4b4b4b),
-                                ),
-                                const SizedBox(width: 16),
-                                const Icon(
-                                  Icons.edit,
-                                  color: Color(0xff4b4b4b),
+                                InkWell(
+                                  onTap: () {
+                                    nastavniciNotifier
+                                        .removeNastavnik(nastavnik.id);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Color(0xff4b4b4b),
+                                  ),
                                 ),
                               ],
                             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_app_timetable/models/ucionica/ucionica.dart';
+import 'package:web_app_timetable/models/ucionica/ucionica_id.dart';
 import 'package:web_app_timetable/services/ucionice_client.dart';
 
 Map ucioniceSort = {
@@ -60,6 +61,15 @@ class UcioniceNotifier extends ChangeNotifier {
 
   List<Map<String, String>> getRoomList() {
     return unfilteredUcionice.map((ucionica) => ucionica.toJson()).toList();
+  }
+
+  removeUcionica(UcionicaId ucionicaId) async {
+    try {
+      await UcioniceClient().removeUcionica(ucionicaId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getUcionice();
   }
 }
 

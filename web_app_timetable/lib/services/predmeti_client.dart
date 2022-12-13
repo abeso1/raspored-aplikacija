@@ -31,4 +31,10 @@ class PredmetiClient {
 
     return predmeti;
   }
+
+    Future<void> removePredmet(int predmetId) async {
+    await http.delete(
+      Uri.parse("$backendUrl/predmet/$predmetId"),
+    );
+  }
 }

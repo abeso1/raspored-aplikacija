@@ -335,16 +335,20 @@ class _TerminiViewState extends State<TerminiView> {
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
                                                                       .end,
-                                                              children: const [
-                                                                Icon(
-                                                                  Icons.edit,
-                                                                  color: Color(
-                                                                      0xff4b4b4b),
-                                                                ),
-                                                                Icon(
-                                                                  Icons.delete,
-                                                                  color: Color(
-                                                                      0xff4b4b4b),
+                                                              children: [
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    terminiNotifier
+                                                                        .removeTermin(
+                                                                            termin.id!);
+                                                                  },
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .delete,
+                                                                    color: Color(
+                                                                        0xff4b4b4b),
+                                                                  ),
                                                                 ),
                                                               ],
                                                             )

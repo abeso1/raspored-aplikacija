@@ -14,10 +14,8 @@ class _GrupeViewState extends State<GrupeView> {
   @override
   void initState() {
     super.initState();
-    Provider.of<GrupeNotifier>(context, listen: false).getGrupeLoading =
-        true;
-    Provider.of<GrupeNotifier>(context, listen: false).getGrupeError =
-        false;
+    Provider.of<GrupeNotifier>(context, listen: false).getGrupeLoading = true;
+    Provider.of<GrupeNotifier>(context, listen: false).getGrupeError = false;
     Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
   }
 
@@ -158,8 +156,7 @@ class _GrupeViewState extends State<GrupeView> {
                 ),
               );
             }
-            if (grupeNotifier.grupe.isEmpty &&
-                !grupeNotifier.grupeFiltered) {
+            if (grupeNotifier.grupe.isEmpty && !grupeNotifier.grupeFiltered) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -210,8 +207,7 @@ class _GrupeViewState extends State<GrupeView> {
                 ],
               );
             }
-            if (grupeNotifier.grupe.isEmpty &&
-                grupeNotifier.grupeFiltered) {
+            if (grupeNotifier.grupe.isEmpty && grupeNotifier.grupeFiltered) {
               return const Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Text(
@@ -245,14 +241,14 @@ class _GrupeViewState extends State<GrupeView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                const Icon(
-                                  Icons.delete,
-                                  color: Color(0xff4b4b4b),
-                                ),
-                                const SizedBox(width: 16),
-                                const Icon(
-                                  Icons.edit,
-                                  color: Color(0xff4b4b4b),
+                                InkWell(
+                                  onTap: () {
+                                    grupeNotifier.removeGrupe(grupa.id);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Color(0xff4b4b4b),
+                                  ),
                                 ),
                               ],
                             ),

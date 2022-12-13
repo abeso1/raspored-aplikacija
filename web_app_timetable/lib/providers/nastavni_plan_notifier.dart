@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_app_timetable/models/plan/plan_id.dart';
 import '../models/plan/plan.dart';
 import '../services/nastavni_plan_client.dart';
 
@@ -38,5 +39,14 @@ class NastavniPlanNotifier extends ChangeNotifier {
     }
 
     return planovi;
+  }
+
+  removeNastavniPlan(PlanId planId) async {
+    try {
+      await NastavniPlanClient().removeNastavniPlan(planId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getNastavniPlan();
   }
 }

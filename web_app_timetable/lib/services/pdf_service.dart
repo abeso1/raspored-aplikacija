@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
@@ -8,19 +6,20 @@ import 'package:web_app_timetable/models/nastavnik/nastavnik.dart';
 import 'package:web_app_timetable/models/predmet/predmet.dart';
 import 'package:web_app_timetable/models/predmet/predmet_id.dart';
 
-import '../../models/grupa/grupa.dart';
-import '../../models/grupa/grupa_id.dart';
-import '../../models/nastavnik/nastavnik_id.dart';
-import '../../models/raspored/raspored.dart';
-import '../../models/termin/dan.dart';
-import '../../models/termin/termin.dart';
-import '../../models/ucionica/ucionica.dart';
-import '../../providers/raspored_notifier.dart';
+import '../models/grupa/grupa.dart';
+import '../models/grupa/grupa_id.dart';
+import '../models/nastavnik/nastavnik_id.dart';
+import '../models/raspored/raspored.dart';
+import '../models/termin/dan.dart';
+import '../models/termin/termin.dart';
+import '../models/ucionica/ucionica.dart';
+import '../providers/raspored_notifier.dart';
 
 import 'package:printing/printing.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
-class PdfView {
+class PdfService {
   Future<void> generateReport({
     required final RasporedType rasporedType,
     required final TimeOfDay najraniji,

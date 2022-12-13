@@ -61,6 +61,15 @@ class GrupeNotifier extends ChangeNotifier {
       return b.naslov.compareTo(a.naslov);
     });
   }
+
+  removeGrupe(GrupaId grupaId) async {
+    try {
+      await GrupeClient().removeGrupa(grupaId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getGrupe();
+  }
 }
 
 enum GrupeSort {

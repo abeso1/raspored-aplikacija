@@ -63,15 +63,20 @@ class NastavniciNotifier extends ChangeNotifier {
     });
   }
 
-  String? predmetDialog;
+  String? nastavnikDialog;
 
-  setPredmetDialog(String? value){
-    predmetDialog = value;
+  setNastavnikDialog(String? value) {
+    nastavnikDialog = value;
     notifyListeners();
   }
 
-  addPredmet(){
-    
+  removeNastavnik(NastavnikId nastavnikId) async {
+    try {
+      await NastavniciClient().removeNastavnik(nastavnikId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getNastavnici();
   }
 }
 

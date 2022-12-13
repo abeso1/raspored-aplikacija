@@ -245,14 +245,14 @@ class _PredmetiViewState extends State<PredmetiView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                const Icon(
-                                  Icons.delete,
-                                  color: Color(0xff4b4b4b),
-                                ),
-                                const SizedBox(width: 16),
-                                const Icon(
-                                  Icons.edit,
-                                  color: Color(0xff4b4b4b),
+                                InkWell(
+                                  onTap: () {
+                                    predmetiNotifier.removePredmet(predmet.id);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Color(0xff4b4b4b),
+                                  ),
                                 ),
                               ],
                             ),

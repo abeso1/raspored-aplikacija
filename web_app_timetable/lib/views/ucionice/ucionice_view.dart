@@ -229,7 +229,7 @@ class _UcioniceViewState extends State<UcioniceView> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Column(
                   children: ucioniceNotifier.ucionice
-                      .map((predmet) => Container(
+                      .map((ucionica) => Container(
                             padding: const EdgeInsets.all(20),
                             margin: const EdgeInsets.only(bottom: 20),
                             decoration: BoxDecoration(
@@ -238,21 +238,22 @@ class _UcioniceViewState extends State<UcioniceView> {
                             child: Row(
                               children: [
                                 Text(
-                                  predmet.naslov,
+                                  ucionica.naslov,
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 const Spacer(),
-                                const Icon(
-                                  Icons.delete,
-                                  color: Color(0xff4b4b4b),
-                                ),
-                                const SizedBox(width: 16),
-                                const Icon(
-                                  Icons.edit,
-                                  color: Color(0xff4b4b4b),
+                                InkWell(
+                                  onTap: () {
+                                    ucioniceNotifier
+                                        .removeUcionica(ucionica.id!);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Color(0xff4b4b4b),
+                                  ),
                                 ),
                               ],
                             ),

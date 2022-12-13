@@ -593,16 +593,18 @@ class _NastavniPlanViewState extends State<NastavniPlanView> {
                                           Expanded(
                                             flex: 1,
                                             child: Row(
-                                              children: const [
-                                                Spacer(),
-                                                Icon(
-                                                  Icons.delete,
-                                                  color: Color(0xff4b4b4b),
-                                                ),
-                                                SizedBox(width: 16),
-                                                Icon(
-                                                  Icons.edit,
-                                                  color: Color(0xff4b4b4b),
+                                              children: [
+                                                const Spacer(),
+                                                InkWell(
+                                                  onTap: () {
+                                                    nastavniPlanNotifier
+                                                        .removeNastavniPlan(
+                                                            plan.id);
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.delete,
+                                                    color: Color(0xff4b4b4b),
+                                                  ),
                                                 ),
                                               ],
                                             ),

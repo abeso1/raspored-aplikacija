@@ -40,4 +40,10 @@ class TerminiClient {
 
     return termini;
   }
+
+    Future<void> removeTermin(int terminId) async {
+    await http.delete(
+      Uri.parse("$backendUrl/termin/$terminId"),
+    );
+  }
 }

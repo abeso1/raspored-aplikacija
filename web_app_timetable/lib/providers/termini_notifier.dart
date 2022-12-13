@@ -126,4 +126,13 @@ class TerminiNotifier extends ChangeNotifier {
   List<Map<String, String>> getTimeslotList() {
     return unfilteredTermini.map((termin) => termin.toJson()).toList();
   }
+
+  removeTermin(TerminId terminId) async {
+    try {
+      await TerminiClient().removeTermin(terminId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getTermini();
+  }
 }

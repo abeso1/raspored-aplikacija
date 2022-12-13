@@ -32,7 +32,7 @@ class NastavniciClient {
     return nastavnici;
   }
 
-  Future<void> addPredmet(String predmet) async {
+  Future<void> addNastavnik(String predmet) async {
     await http.post(
       Uri.parse("$backendUrl/nastavnik"),
       headers: {
@@ -43,6 +43,12 @@ class NastavniciClient {
           'predmet': predmet,
         },
       ),
+    );
+  }
+
+  Future<void> removeNastavnik(int nastavnikId) async {
+    await http.delete(
+      Uri.parse("$backendUrl/nastavnik/$nastavnikId"),
     );
   }
 }

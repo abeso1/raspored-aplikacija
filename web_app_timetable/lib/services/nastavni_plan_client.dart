@@ -56,4 +56,10 @@ class NastavniPlanClient {
     }
     return false;
   }
+
+  Future<void> removeNastavniPlan(int nastavniPlanId) async {
+    await http.delete(
+      Uri.parse("$backendUrl/predavanje/$nastavniPlanId"),
+    );
+  }
 }
