@@ -439,54 +439,32 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                                   width: 100,
                                   child: InkWell(
                                     onTap: () {
-                                      showDialog(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (ctx) {
-                                            return Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .height,
-                                              color:
-                                                  Colors.white.withOpacity(0.2),
-                                              child: PdfView(
-                                                rasporedType: rasporedNotifier
-                                                    .rasporedType,
-                                                najkasniji: rasporedNotifier
-                                                    .najkasniji!,
-                                                najraniji:
-                                                    rasporedNotifier.najraniji!,
-                                                selectedGrupa: rasporedNotifier
-                                                    .selectedGrupa,
-                                                selectedNastavnik:
-                                                    rasporedNotifier
-                                                        .selectedNastavnik,
-                                                selectedUcionica:
-                                                    rasporedNotifier
-                                                        .selectedUcionica,
-                                                mappedByGrupe: rasporedNotifier
-                                                    .mappedByGrupe,
-                                                mappedByNastavnici:
-                                                    rasporedNotifier
-                                                        .mappedByNastavnici,
-                                                mappedByUcionica:
-                                                    rasporedNotifier
-                                                        .mappedByUcionica,
-                                                grupeMapped:
-                                                    grupeNotifier.grupeMapped,
-                                                nastavniciMapped:
-                                                    nastavniciNotifier
-                                                        .nastavniciMapped,
-                                                predmetiMapped: predmetiNotifier
-                                                    .predmetiMapped,
-                                                    grupe: rasporedNotifier.grupe,
-                                                    predmeti: rasporedNotifier.predmeti,
-                                              ),
-                                            );
-                                          });
+                                      PdfView().generateReport(
+                                        rasporedType:
+                                            rasporedNotifier.rasporedType,
+                                        najkasniji:
+                                            rasporedNotifier.najkasniji!,
+                                        najraniji: rasporedNotifier.najraniji!,
+                                        selectedGrupa:
+                                            rasporedNotifier.selectedGrupa,
+                                        selectedNastavnik:
+                                            rasporedNotifier.selectedNastavnik,
+                                        selectedUcionica:
+                                            rasporedNotifier.selectedUcionica,
+                                        mappedByGrupe:
+                                            rasporedNotifier.mappedByGrupe,
+                                        mappedByNastavnici:
+                                            rasporedNotifier.mappedByNastavnici,
+                                        mappedByUcionica:
+                                            rasporedNotifier.mappedByUcionica,
+                                        grupeMapped: grupeNotifier.grupeMapped,
+                                        nastavniciMapped:
+                                            nastavniciNotifier.nastavniciMapped,
+                                        predmetiMapped:
+                                            predmetiNotifier.predmetiMapped,
+                                        grupe: rasporedNotifier.grupe,
+                                        predmeti: rasporedNotifier.predmeti,
+                                      );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
