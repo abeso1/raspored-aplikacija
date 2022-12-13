@@ -57,24 +57,50 @@ class _DashboardViewState extends State<DashboardView> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 50),
-                            child: Row(
+                            child: Column(
                               children: [
-                                Text(
-                                  'ŠKOLSKI',
-                                  style: TextStyle(
-                                      color: AppColors.mainGreen,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold),
+                                SizedBox(
+                                  width: 300,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Spacer(),
+                                      Text(
+                                        'ŠKOLSKI',
+                                        style: TextStyle(
+                                            color: AppColors.mainGreen,
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const Text(
+                                        'RASPORED',
+                                        style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const Text(
-                                  'RASPORED',
-                                  style: TextStyle(
-                                      color: Color(0xff333333),
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold),
+                                SizedBox(
+                                  width: 300,
+                                  child: Row(
+                                    children: const [
+                                      Spacer(),
+                                      Text(
+                                        'UNVI Team',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(width: 2),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

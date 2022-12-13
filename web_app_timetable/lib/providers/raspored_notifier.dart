@@ -35,6 +35,7 @@ class RasporedNotifier extends ChangeNotifier {
 
   List<GrupaId> grupe = [];
   List<NastavnikId> nastavnici = [];
+  List<PredmetId> predmeti = [];
 
   Map<GrupaId, Map<Dan, List<Raspored>>> mappedByGrupe = {};
   Map<Ucionica, Map<Dan, List<Raspored>>> mappedByUcionica = {};
@@ -103,10 +104,12 @@ class RasporedNotifier extends ChangeNotifier {
 
     Set<GrupaId> grupeSet = {};
     Set<NastavnikId> nastavniciSet = {};
+    Set<PredmetId> predmetiSet = {};
 
     for (var ras in raspored) {
       grupeSet.add(ras.grupaId);
       nastavniciSet.add(ras.nastavnikId);
+      predmetiSet.add(ras.predmetId);
       mappedByGrupe[ras.grupaId] ??= {
         Dan.ponedjeljak: [],
         Dan.utorak: [],
@@ -142,6 +145,7 @@ class RasporedNotifier extends ChangeNotifier {
 
     grupe = grupeSet.toList();
     nastavnici = nastavniciSet.toList();
+    predmeti = predmetiSet.toList();
 
     mappedByGrupe.forEach((grupaId, rasporedPoDanu) {
       rasporedPoDanu.forEach((dan, raspored) {

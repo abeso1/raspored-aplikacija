@@ -39,10 +39,36 @@ class _RasporedViewState extends State<RasporedView> {
 
 const _rowHeight = 110.0;
 
-class RasporedWidget extends StatelessWidget {
+class RasporedWidget extends StatefulWidget {
   const RasporedWidget({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<RasporedWidget> createState() => _RasporedWidgetState();
+}
+
+class _RasporedWidgetState extends State<RasporedWidget> {
+  List<Color> colors = [
+    const Color(0xffff6666),
+    const Color(0xffffb266),
+    const Color(0xff660066),
+    const Color(0xffffff66),
+    const Color(0xff66ff66),
+    const Color(0xff000066),
+    const Color(0xff66b2ff),
+    const Color(0xffff66b2),
+    const Color(0xffb2ff66),
+    const Color(0xff660000),
+    const Color(0xff6666ff),
+    const Color(0xff66ffb2),
+    const Color(0xffff66ff),
+    const Color(0xff006600),
+    const Color(0xff66ffff),
+    const Color(0xffb266ff),
+    const Color(0xff000066),
+    const Color(0xff666600),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +214,7 @@ class RasporedWidget extends StatelessWidget {
                                   if (nastavniciNotifier
                                       .nastavniciMapped.isNotEmpty) {
                                     return SizedBox(
-                                      width: 200,
+                                      width: 240,
                                       child: DropdownButtonFormField(
                                           isExpanded: true,
                                           value: rasporedNotifier
@@ -448,6 +474,7 @@ class RasporedWidget extends StatelessWidget {
                                             i++) {
                                           sati.add("$i:00");
                                         }
+
                                         return Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -511,263 +538,308 @@ class RasporedWidget extends StatelessWidget {
                                           ],
                                         );
                                       }),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(width: _rowHeight),
-                                          ...Dan.values.map((dan) => Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    ...(rasporedNotifier
-                                                                    .rasporedType ==
-                                                                RasporedType
-                                                                    .grupa
-                                                            ? rasporedNotifier
-                                                                    .mappedByGrupe[
-                                                                rasporedNotifier
-                                                                    .selectedGrupa]
-                                                            : rasporedNotifier
-                                                                        .rasporedType ==
-                                                                    RasporedType
-                                                                        .ucionica
-                                                                ? rasporedNotifier
-                                                                        .mappedByUcionica[
-                                                                    rasporedNotifier
-                                                                        .selectedUcionica]
-                                                                : rasporedNotifier
-                                                                        .mappedByNastavnici[
-                                                                    rasporedNotifier
-                                                                        .selectedNastavnik])![dan]!
-                                                        .map((raspored) {
-                                                      final DateTime now =
-                                                          DateTime.now();
-                                                      final DateTime start =
-                                                          DateTime(
-                                                              now.year,
-                                                              now.month,
-                                                              now.day,
-                                                              (raspored.termin)
-                                                                  .pocetak
-                                                                  .hour,
-                                                              (raspored.termin)
-                                                                  .pocetak
-                                                                  .minute);
-                                                      final DateTime end =
-                                                          DateTime(
-                                                              now.year,
-                                                              now.month,
-                                                              now.day,
-                                                              (raspored.termin)
-                                                                  .kraj
-                                                                  .hour,
-                                                              (raspored.termin)
-                                                                  .kraj
-                                                                  .minute);
-                                                      return Container(
-                                                        width: double.infinity,
-                                                        height: end
-                                                                .difference(
-                                                                    start)
-                                                                .inMinutes /
-                                                            60 *
-                                                            _rowHeight,
-                                                        margin: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 10),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10),
-                                                        decoration: !raspored
-                                                                .termin.show!
-                                                            ? null
-                                                            : BoxDecoration(
-                                                                color: raspored
-                                                                        .termin
-                                                                        .show!
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .transparent,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border: Border.all(
-                                                                    width: 1,
-                                                                    color: const Color(
-                                                                        0xffe7e7e7))),
-                                                        child:
-                                                            !raspored.termin
-                                                                    .show!
-                                                                ? null
-                                                                : Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceEvenly,
-                                                                    children: [
-                                                                      if (rasporedNotifier
-                                                                              .rasporedType ==
-                                                                          RasporedType
-                                                                              .ucionica) ...[
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              grupeNotifier.grupeMapped[raspored.grupaId]!.naslov,
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w700,
-                                                                                fontSize: 14,
+                                      Builder(builder: (context) {
+                                        Map<dynamic, Color> colorsMapped = {};
+                                        try {
+                                          if (rasporedNotifier.rasporedType ==
+                                              RasporedType.grupa) {
+                                            for (var i = 0;
+                                                i <
+                                                    rasporedNotifier
+                                                        .predmeti.length;
+                                                i++) {
+                                              colorsMapped[rasporedNotifier
+                                                  .predmeti[i]] = colors[i];
+                                            }
+                                          }
+
+                                          if (rasporedNotifier.rasporedType ==
+                                              RasporedType.ucionica) {
+                                            for (var i = 0;
+                                                i <
+                                                    rasporedNotifier
+                                                        .grupe.length;
+                                                i++) {
+                                              colorsMapped[rasporedNotifier
+                                                  .grupe[i]] = colors[i];
+                                            }
+                                          }
+
+                                          if (rasporedNotifier.rasporedType ==
+                                              RasporedType.nastavnik) {
+                                            for (var i = 0;
+                                                i <
+                                                    rasporedNotifier
+                                                        .grupe.length;
+                                                i++) {
+                                              colorsMapped[rasporedNotifier
+                                                  .grupe[i]] = colors[i];
+                                            }
+                                          }
+                                        } catch (e) {
+                                          debugPrint(e.toString());
+                                        }
+
+                                        return Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(width: _rowHeight),
+                                            ...Dan.values.map((dan) => Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      ...(rasporedNotifier
+                                                                      .rasporedType ==
+                                                                  RasporedType
+                                                                      .grupa
+                                                              ? rasporedNotifier
+                                                                      .mappedByGrupe[
+                                                                  rasporedNotifier
+                                                                      .selectedGrupa]
+                                                              : rasporedNotifier
+                                                                          .rasporedType ==
+                                                                      RasporedType
+                                                                          .ucionica
+                                                                  ? rasporedNotifier
+                                                                          .mappedByUcionica[
+                                                                      rasporedNotifier
+                                                                          .selectedUcionica]
+                                                                  : rasporedNotifier
+                                                                          .mappedByNastavnici[
+                                                                      rasporedNotifier
+                                                                          .selectedNastavnik])![dan]!
+                                                          .map((raspored) {
+                                                        final DateTime now =
+                                                            DateTime.now();
+                                                        final DateTime start =
+                                                            DateTime(
+                                                                now.year,
+                                                                now.month,
+                                                                now.day,
+                                                                (raspored
+                                                                        .termin)
+                                                                    .pocetak
+                                                                    .hour,
+                                                                (raspored
+                                                                        .termin)
+                                                                    .pocetak
+                                                                    .minute);
+                                                        final DateTime end =
+                                                            DateTime(
+                                                                now.year,
+                                                                now.month,
+                                                                now.day,
+                                                                (raspored
+                                                                        .termin)
+                                                                    .kraj
+                                                                    .hour,
+                                                                (raspored
+                                                                        .termin)
+                                                                    .kraj
+                                                                    .minute);
+                                                        return Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: end
+                                                                  .difference(
+                                                                      start)
+                                                                  .inMinutes /
+                                                              60 *
+                                                              _rowHeight,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      10),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          decoration: !raspored
+                                                                  .termin.show!
+                                                              ? null
+                                                              : BoxDecoration(
+                                                                  color: raspored
+                                                                          .termin
+                                                                          .show!
+                                                                      ? Colors
+                                                                          .white
+                                                                      : Colors
+                                                                          .transparent,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border.all(
+                                                                      width: 1,
+                                                                      color: const Color(
+                                                                          0xffe7e7e7))),
+                                                          child:
+                                                              !raspored.termin
+                                                                      .show!
+                                                                  ? null
+                                                                  : Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
+                                                                      children: [
+                                                                        if (rasporedNotifier.rasporedType ==
+                                                                            RasporedType.ucionica) ...[
+                                                                          Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                grupeNotifier.grupeMapped[raspored.grupaId]!.naslov,
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                  fontSize: 14,
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                            const Spacer(),
-                                                                            Text(
-                                                                              '${timeOfDayToString(raspored.termin.pocetak)} - ${timeOfDayToString(raspored.termin.kraj)}',
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 12,
+                                                                              const Spacer(),
+                                                                              Text(
+                                                                                '${timeOfDayToString(raspored.termin.pocetak)} - ${timeOfDayToString(raspored.termin.kraj)}',
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontSize: 12,
+                                                                                ),
                                                                               ),
+                                                                            ],
+                                                                          ),
+                                                                          Text(
+                                                                            nastavniciNotifier.nastavniciMapped[raspored.nastavnikId]!.naslov,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 12,
                                                                             ),
-                                                                          ],
-                                                                        ),
-                                                                        Text(
-                                                                          nastavniciNotifier
-                                                                              .nastavniciMapped[raspored.nastavnikId]!
-                                                                              .naslov,
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontSize:
-                                                                                12,
                                                                           ),
-                                                                        ),
-                                                                        Text(
-                                                                          predmetiNotifier
-                                                                              .predmetiMapped[raspored.predmetId]!
-                                                                              .naslov,
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontSize:
-                                                                                12,
+                                                                          Text(
+                                                                            predmetiNotifier.predmetiMapped[raspored.predmetId]!.naslov,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                            ),
                                                                           ),
-                                                                        ),
+                                                                          Container(
+                                                                            height:
+                                                                                5,
+                                                                            width:
+                                                                                double.infinity,
+                                                                            color:
+                                                                                colorsMapped[raspored.grupaId],
+                                                                          ),
+                                                                        ],
+                                                                        if (rasporedNotifier.rasporedType ==
+                                                                            RasporedType.grupa) ...[
+                                                                          Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                predmetiNotifier.predmetiMapped[raspored.predmetId]!.naslov,
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                  fontSize: 14,
+                                                                                ),
+                                                                              ),
+                                                                              const Spacer(),
+                                                                              Text(
+                                                                                '${timeOfDayToString(raspored.termin.pocetak)} - ${timeOfDayToString(raspored.termin.kraj)}',
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontSize: 12,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Text(
+                                                                            nastavniciNotifier.nastavniciMapped[raspored.nastavnikId]!.naslov,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                            ),
+                                                                          ),
+                                                                          Text(
+                                                                            raspored.ucionica.naslov,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                            ),
+                                                                          ),
+                                                                          Container(
+                                                                            height:
+                                                                                5,
+                                                                            width:
+                                                                                double.infinity,
+                                                                            color:
+                                                                                colorsMapped[raspored.predmetId],
+                                                                          ),
+                                                                        ],
+                                                                        if (rasporedNotifier.rasporedType ==
+                                                                            RasporedType.nastavnik) ...[
+                                                                          Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                grupeNotifier.grupeMapped[raspored.grupaId]!.naslov,
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                  fontSize: 14,
+                                                                                ),
+                                                                              ),
+                                                                              const Spacer(),
+                                                                              Text(
+                                                                                '${timeOfDayToString(raspored.termin.pocetak)} - ${timeOfDayToString(raspored.termin.kraj)}',
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontSize: 12,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Text(
+                                                                            predmetiNotifier.predmetiMapped[raspored.predmetId]!.naslov,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                            ),
+                                                                          ),
+                                                                          Text(
+                                                                            raspored.ucionica.naslov,
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                            ),
+                                                                          ),
+                                                                          Container(
+                                                                            height:
+                                                                                5,
+                                                                            width:
+                                                                                double.infinity,
+                                                                            color:
+                                                                                colorsMapped[raspored.grupaId],
+                                                                          ),
+                                                                        ],
                                                                       ],
-                                                                      if (rasporedNotifier
-                                                                              .rasporedType ==
-                                                                          RasporedType
-                                                                              .grupa) ...[
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              predmetiNotifier.predmetiMapped[raspored.predmetId]!.naslov,
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w700,
-                                                                                fontSize: 14,
-                                                                              ),
-                                                                            ),
-                                                                            const Spacer(),
-                                                                            Text(
-                                                                              '${timeOfDayToString(raspored.termin.pocetak)} - ${timeOfDayToString(raspored.termin.kraj)}',
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 12,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Text(
-                                                                          nastavniciNotifier
-                                                                              .nastavniciMapped[raspored.nastavnikId]!
-                                                                              .naslov,
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontSize:
-                                                                                12,
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          raspored
-                                                                              .ucionica
-                                                                              .naslov,
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontSize:
-                                                                                12,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                      if (rasporedNotifier
-                                                                              .rasporedType ==
-                                                                          RasporedType
-                                                                              .nastavnik) ...[
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              grupeNotifier.grupeMapped[raspored.grupaId]!.naslov,
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w700,
-                                                                                fontSize: 14,
-                                                                              ),
-                                                                            ),
-                                                                            const Spacer(),
-                                                                            Text(
-                                                                              '${timeOfDayToString(raspored.termin.pocetak)} - ${timeOfDayToString(raspored.termin.kraj)}',
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 12,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Text(
-                                                                          predmetiNotifier
-                                                                              .predmetiMapped[raspored.predmetId]!
-                                                                              .naslov,
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontSize:
-                                                                                12,
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          raspored
-                                                                              .ucionica
-                                                                              .naslov,
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontSize:
-                                                                                12,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ],
-                                                                  ),
-                                                      );
-                                                    }).toList(),
-                                                  ],
-                                                ),
-                                              )),
-                                        ],
-                                      ),
+                                                                    ),
+                                                        );
+                                                      }).toList(),
+                                                    ],
+                                                  ),
+                                                )),
+                                          ],
+                                        );
+                                      }),
                                     ],
                                   )
                                 ],

@@ -39,24 +39,43 @@ class _LoginViewState extends State<LoginView> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(45.0),
-                  child: Row(
+                  child: Column(
                     children: [
-                      Text(
-                        'ŠKOLSKI',
-                        style: TextStyle(
-                            color: AppColors.mainGreen,
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            'ŠKOLSKI',
+                            style: TextStyle(
+                                color: AppColors.mainGreen,
+                                fontSize: 34,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            'RASPORED',
+                            style: TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: 34,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'RASPORED',
-                        style: TextStyle(
-                            color: Color(0xff333333),
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Container(
+                            width: 340,
+                            alignment: Alignment.centerRight,
+                            child: const Text(
+                              'UNVI Team',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

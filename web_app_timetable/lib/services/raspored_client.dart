@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class RasporedClient {
@@ -31,7 +32,7 @@ class RasporedClient {
       }
       return null;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return null;
     }
   }
