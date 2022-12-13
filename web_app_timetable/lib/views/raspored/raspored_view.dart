@@ -60,151 +60,179 @@ class RasporedWidget extends StatelessWidget {
                     flex: 8,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ...RasporedType.values
-                            .map((type) => Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Radio<RasporedType>(
-                                        value: type,
-                                        groupValue:
-                                            rasporedNotifier.rasporedType,
-                                        onChanged: (val) {
-                                          if (val != null) {
-                                            rasporedNotifier
-                                                .setRasporedType(val);
-                                          }
-                                        }),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(rasporedTypeMappedToBosanski[type]!),
-                                  ],
-                                ))
-                            .toList(),
-                        if (rasporedNotifier.rasporedType == RasporedType.grupa)
-                          Consumer<GrupeNotifier>(
-                              builder: (context, grupeNotifier, child) {
-                            return SizedBox(
-                              width: 200,
-                              child: DropdownButtonFormField(
-                                  isExpanded: true,
-                                  value: rasporedNotifier.selectedGrupa,
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(width: 0),
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color.fromRGBO(
-                                          9, 30, 66, 0.04)),
-                                  hint: const Text('Odabir odjeljenja',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                      )),
-                                  items: rasporedNotifier.grupe
-                                      .map(
-                                        (grupa) => DropdownMenuItem(
-                                          value: grupa,
-                                          child: Text(
-                                            grupeNotifier
-                                                .grupeMapped[grupa]!.naslov,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14,
-                                            ),
+                      children: rasporedNotifier.raspored.isEmpty
+                          ? []
+                          : [
+                              ...RasporedType.values
+                                  .map((type) => Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Radio<RasporedType>(
+                                              value: type,
+                                              groupValue:
+                                                  rasporedNotifier.rasporedType,
+                                              onChanged: (val) {
+                                                if (val != null) {
+                                                  rasporedNotifier
+                                                      .setRasporedType(val);
+                                                }
+                                              }),
+                                          const SizedBox(
+                                            width: 10,
                                           ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) =>
-                                      rasporedNotifier.setSelectedGrupa(value)),
-                            );
-                          }),
-                        if (rasporedNotifier.rasporedType ==
-                            RasporedType.ucionica)
-                          Consumer<PredmetiNotifier>(
-                              builder: (context, predmetiNotifier, child) {
-                            return SizedBox(
-                              width: 200,
-                              child: DropdownButtonFormField(
-                                  isExpanded: true,
-                                  value: rasporedNotifier.selectedUcionica,
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(width: 0),
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color.fromRGBO(
-                                          9, 30, 66, 0.04)),
-                                  hint: const Text('Odabir učionice',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                      )),
-                                  items: rasporedNotifier.ucionice
-                                      .map(
-                                        (ucionica) => DropdownMenuItem(
-                                          value: ucionica,
-                                          child: Text(
-                                            ucionica.naslov,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) => rasporedNotifier
-                                      .setSelectedUcionica(value)),
-                            );
-                          }),
-                        if (rasporedNotifier.rasporedType ==
-                            RasporedType.nastavnik)
-                          Consumer<NastavniciNotifier>(
-                              builder: (context, nastavniciNotifier, child) {
-                            return SizedBox(
-                              width: 200,
-                              child: DropdownButtonFormField(
-                                  isExpanded: true,
-                                  value: rasporedNotifier.selectedNastavnik,
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(width: 0),
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color.fromRGBO(
-                                          9, 30, 66, 0.04)),
-                                  hint: const Text('Odabir profesora',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                      )),
-                                  items: rasporedNotifier.nastavnici
-                                      .map(
-                                        (nastavnik) => DropdownMenuItem(
-                                          value: nastavnik,
-                                          child: Text(
-                                            nastavniciNotifier
-                                                .nastavniciMapped[nastavnik]!
-                                                .naslov,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) => rasporedNotifier
-                                      .setSelectedNastavnik(value)),
-                            );
-                          }),
-                      ],
+                                          Text(rasporedTypeMappedToBosanski[
+                                              type]!),
+                                        ],
+                                      ))
+                                  .toList(),
+                              if (rasporedNotifier.rasporedType ==
+                                  RasporedType.grupa)
+                                Consumer<GrupeNotifier>(
+                                    builder: (context, grupeNotifier, child) {
+                                  if (grupeNotifier.grupeMapped.isNotEmpty) {
+                                    return SizedBox(
+                                      width: 200,
+                                      child: DropdownButtonFormField(
+                                          isExpanded: true,
+                                          value: rasporedNotifier.selectedGrupa,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderSide:
+                                                    const BorderSide(width: 0),
+                                                borderRadius:
+                                                    BorderRadius.circular(3),
+                                              ),
+                                              filled: true,
+                                              fillColor: const Color.fromRGBO(
+                                                  9, 30, 66, 0.04)),
+                                          hint: const Text('Odabir odjeljenja',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              )),
+                                          items: rasporedNotifier.grupe
+                                              .map(
+                                                (grupa) => DropdownMenuItem(
+                                                  value: grupa,
+                                                  child: Text(
+                                                    grupeNotifier
+                                                        .grupeMapped[grupa]!
+                                                        .naslov,
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                          onChanged: (value) => rasporedNotifier
+                                              .setSelectedGrupa(value)),
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
+                              if (rasporedNotifier.rasporedType ==
+                                  RasporedType.ucionica)
+                                Consumer<PredmetiNotifier>(builder:
+                                    (context, predmetiNotifier, child) {
+                                  if (predmetiNotifier
+                                      .predmetiMapped.isNotEmpty) {
+                                    return SizedBox(
+                                      width: 200,
+                                      child: DropdownButtonFormField(
+                                          isExpanded: true,
+                                          value:
+                                              rasporedNotifier.selectedUcionica,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderSide:
+                                                    const BorderSide(width: 0),
+                                                borderRadius:
+                                                    BorderRadius.circular(3),
+                                              ),
+                                              filled: true,
+                                              fillColor: const Color.fromRGBO(
+                                                  9, 30, 66, 0.04)),
+                                          hint: const Text('Odabir učionice',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              )),
+                                          items: rasporedNotifier.ucionice
+                                              .map(
+                                                (ucionica) => DropdownMenuItem(
+                                                  value: ucionica,
+                                                  child: Text(
+                                                    ucionica.naslov,
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                          onChanged: (value) => rasporedNotifier
+                                              .setSelectedUcionica(value)),
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
+                              if (rasporedNotifier.rasporedType ==
+                                  RasporedType.nastavnik)
+                                Consumer<NastavniciNotifier>(builder:
+                                    (context, nastavniciNotifier, child) {
+                                  if (nastavniciNotifier
+                                      .nastavniciMapped.isNotEmpty) {
+                                    return SizedBox(
+                                      width: 200,
+                                      child: DropdownButtonFormField(
+                                          isExpanded: true,
+                                          value: rasporedNotifier
+                                              .selectedNastavnik,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderSide:
+                                                    const BorderSide(width: 0),
+                                                borderRadius:
+                                                    BorderRadius.circular(3),
+                                              ),
+                                              filled: true,
+                                              fillColor: const Color.fromRGBO(
+                                                  9, 30, 66, 0.04)),
+                                          hint: const Text('Odabir profesora',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              )),
+                                          items: rasporedNotifier.nastavnici
+                                              .map(
+                                                (nastavnik) => DropdownMenuItem(
+                                                  value: nastavnik,
+                                                  child: Text(
+                                                    nastavniciNotifier
+                                                        .nastavniciMapped[
+                                                            nastavnik]!
+                                                        .naslov,
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                          onChanged: (value) => rasporedNotifier
+                                              .setSelectedNastavnik(value)),
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
+                            ],
                     ),
                   );
                 }),
@@ -359,7 +387,7 @@ class RasporedWidget extends StatelessWidget {
                   }
                   return Expanded(
                     child: Container(
-                      margin: const EdgeInsets.fromLTRB(50, 0, 50, 50),
+                      margin: const EdgeInsets.fromLTRB(50, 0, 50, 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
@@ -370,6 +398,7 @@ class RasporedWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
+                            padding: const EdgeInsets.all(20),
                             height: 60,
                             decoration: const BoxDecoration(
                               border: Border(

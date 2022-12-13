@@ -62,6 +62,17 @@ class NastavniciNotifier extends ChangeNotifier {
       return b.naslov.compareTo(a.naslov);
     });
   }
+
+  String? predmetDialog;
+
+  setPredmetDialog(String? value){
+    predmetDialog = value;
+    notifyListeners();
+  }
+
+  addPredmet(){
+    
+  }
 }
 
 enum NastavniciSort {

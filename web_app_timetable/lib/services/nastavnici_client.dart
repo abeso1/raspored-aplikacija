@@ -31,4 +31,18 @@ class NastavniciClient {
 
     return nastavnici;
   }
+
+  Future<void> addPredmet(String predmet) async {
+    await http.post(
+      Uri.parse("$backendUrl/nastavnik"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(
+        {
+          'predmet': predmet,
+        },
+      ),
+    );
+  }
 }

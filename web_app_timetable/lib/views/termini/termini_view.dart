@@ -149,7 +149,7 @@ class _TerminiViewState extends State<TerminiView> {
             }
             return Expanded(
               child: Container(
-                margin: const EdgeInsets.fromLTRB(50, 0, 50, 50),
+                margin: const EdgeInsets.fromLTRB(50, 0, 50, 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(width: 1, color: const Color(0xffdddddd)),
@@ -160,6 +160,7 @@ class _TerminiViewState extends State<TerminiView> {
                   children: [
                     Container(
                       height: 60,
+                      padding: const EdgeInsets.all(20),
                       decoration: const BoxDecoration(
                         border: Border(
                             bottom:
@@ -168,10 +169,7 @@ class _TerminiViewState extends State<TerminiView> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 100,
-                            child: Column(),
-                          ),
+                          const SizedBox(width: 100),
                           ...Dan.values.map(
                             (dan) => Expanded(
                               child: Center(
@@ -230,7 +228,6 @@ class _TerminiViewState extends State<TerminiView> {
                                       ],
                                     ),
                                     Expanded(
-                                      flex: 6,
                                       child: Column(
                                         children: [
                                           ...terminiNotifier.sati!
