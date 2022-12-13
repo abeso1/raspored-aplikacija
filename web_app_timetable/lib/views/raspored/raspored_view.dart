@@ -6,6 +6,7 @@ import 'package:web_app_timetable/providers/nastavnici_notifier.dart';
 import 'package:web_app_timetable/providers/predmeti_notifier.dart';
 import 'package:web_app_timetable/providers/raspored_notifier.dart';
 import 'package:web_app_timetable/shared/widgets/loader.dart';
+import 'package:web_app_timetable/views/raspored/pdf_view.dart';
 
 import '../../models/termin/dan.dart';
 import '../../models/termin/termin.dart';
@@ -117,7 +118,7 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                                     builder: (context, grupeNotifier, child) {
                                   if (grupeNotifier.grupeMapped.isNotEmpty) {
                                     return SizedBox(
-                                      width: 200,
+                                      width: 240,
                                       child: DropdownButtonFormField(
                                           isExpanded: true,
                                           value: rasporedNotifier.selectedGrupa,
@@ -166,7 +167,7 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                                   if (predmetiNotifier
                                       .predmetiMapped.isNotEmpty) {
                                     return SizedBox(
-                                      width: 200,
+                                      width: 240,
                                       child: DropdownButtonFormField(
                                           isExpanded: true,
                                           value:
@@ -424,7 +425,7 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             height: 60,
                             decoration: const BoxDecoration(
                               border: Border(
@@ -436,7 +437,81 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                               children: [
                                 SizedBox(
                                   width: 100,
-                                  child: Column(),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (ctx) {
+                                            return Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                  .size
+                                                  .height,
+                                              color:
+                                                  Colors.white.withOpacity(0.2),
+                                              child: PdfView(
+                                                rasporedType: rasporedNotifier
+                                                    .rasporedType,
+                                                najkasniji: rasporedNotifier
+                                                    .najkasniji!,
+                                                najraniji:
+                                                    rasporedNotifier.najraniji!,
+                                                selectedGrupa: rasporedNotifier
+                                                    .selectedGrupa,
+                                                selectedNastavnik:
+                                                    rasporedNotifier
+                                                        .selectedNastavnik,
+                                                selectedUcionica:
+                                                    rasporedNotifier
+                                                        .selectedUcionica,
+                                                mappedByGrupe: rasporedNotifier
+                                                    .mappedByGrupe,
+                                                mappedByNastavnici:
+                                                    rasporedNotifier
+                                                        .mappedByNastavnici,
+                                                mappedByUcionica:
+                                                    rasporedNotifier
+                                                        .mappedByUcionica,
+                                                grupeMapped:
+                                                    grupeNotifier.grupeMapped,
+                                                nastavniciMapped:
+                                                    nastavniciNotifier
+                                                        .nastavniciMapped,
+                                                predmetiMapped: predmetiNotifier
+                                                    .predmetiMapped,
+                                                    grupe: rasporedNotifier.grupe,
+                                                    predmeti: rasporedNotifier.predmeti,
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.mainGreen,
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const [
+                                            Text(
+                                              'PDF',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 ...Dan.values.map(
                                   (dan) => Expanded(

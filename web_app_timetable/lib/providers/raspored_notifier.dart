@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:web_app_timetable/models/grupa/grupa_id.dart';
@@ -50,7 +49,8 @@ class RasporedNotifier extends ChangeNotifier {
     List<Map<String, String>> roomList = ucioniceNotifier.getRoomList();
     List<Map<String, int>> lessonList = nastavniPlanNotifier.getLessonList();
 
-    Uint8List? response = await RasporedClient().createRaspored(
+    //Uint8List?
+    String? response = await RasporedClient().createRaspored(
       roomList: roomList,
       timeslotList: timeslotList,
       lessonList: lessonList,
@@ -62,7 +62,24 @@ class RasporedNotifier extends ChangeNotifier {
       return;
     }
 
-    Map decoded = jsonDecode(utf8.decode(response));
+    termini = [];
+    ucionice = [];
+    raspored = {};
+    getRasporedError = false;
+
+    grupe = [];
+    nastavnici = [];
+    predmeti = [];
+
+    mappedByGrupe = {};
+    mappedByUcionica = {};
+    mappedByNastavnici = {};
+
+    najraniji = null;
+    najkasniji = null;
+
+    // Map decoded = jsonDecode(utf8.decode(response));
+    Map decoded = jsonDecode((response));
 
     List decodedTermini = decoded['timeslotList'];
     termini = [];
