@@ -475,7 +475,7 @@ class _NastavniPlanViewState extends State<NastavniPlanView> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                'Predmet',
+                                'Profesor',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -485,7 +485,7 @@ class _NastavniPlanViewState extends State<NastavniPlanView> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                'Profesor',
+                                'Predmet',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
