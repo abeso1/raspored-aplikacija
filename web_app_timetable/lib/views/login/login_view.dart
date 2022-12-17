@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
+import 'package:web_app_timetable/shared/widgets/loader.dart';
 
 import '../../shared/theme/colors.dart';
 
@@ -117,11 +118,25 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     const SizedBox(height: 40),
                     InkWell(
-                      onTap: () {
-                        if (mail == null ||
-                            password == null ||
-                            !Provider.of<AuthNotifier>(context, listen: false)
-                                .login(mail!, password!)) {
+                      onTap: () async {
+                        if (mail != null && password != null) {
+                          ReusableLoader.showLoader(context);
+
+                          bool success = await Provider.of<AuthNotifier>(
+                                  context,
+                                  listen: false)
+                              .login(mail!, password!);
+
+                          ReusableLoader.popLoader();
+                          if (!success) {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Netačan mail ili lozinka!'),
+                            ));
+                          }
+                        } else {
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
                             content: Text('Netačan mail ili lozinka!'),
@@ -187,7 +202,11 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   InkWell(
                     onTap: () {
-                      launchUrl(Uri.parse('mailto:amer.beso@unvi.edu.ba'));
+                      try {
+                        launchUrl(Uri.parse('mailto:amer.beso@unvi.edu.ba'));
+                      } catch (e) {
+                        debugPrint(e.toString());
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
