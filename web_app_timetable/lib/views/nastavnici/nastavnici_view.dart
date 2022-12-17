@@ -156,7 +156,6 @@ class _NastavniciViewState extends State<NastavniciView> {
                                       const SizedBox(height: 40),
                                       const SizedBox(height: 22),
                                       TextFormField(
-                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(
                                             borderRadius:

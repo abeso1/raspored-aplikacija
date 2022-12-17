@@ -71,6 +71,13 @@ class UcioniceNotifier extends ChangeNotifier {
     }
     getUcionice();
   }
+
+  String? ucionicaDialog;
+
+  setUcionicaDialog(String? value) {
+    ucionicaDialog = value;
+    notifyListeners();
+  }
 }
 
 enum UcioniceSort {

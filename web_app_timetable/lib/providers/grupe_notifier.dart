@@ -70,6 +70,13 @@ class GrupeNotifier extends ChangeNotifier {
     }
     getGrupe();
   }
+
+  String? odjeljenjeDialog;
+
+  setOdjeljenjeDialog(String? value) {
+    odjeljenjeDialog = value;
+    notifyListeners();
+  }
 }
 
 enum GrupeSort {

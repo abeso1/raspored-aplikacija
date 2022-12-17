@@ -72,6 +72,13 @@ class PredmetiNotifier extends ChangeNotifier {
     }
     getPredmeti();
   }
+
+  String? predmetDialog;
+
+  setPredmetDialog(String? value) {
+    predmetDialog = value;
+    notifyListeners();
+  }
 }
 
 enum PredmetiSort {
