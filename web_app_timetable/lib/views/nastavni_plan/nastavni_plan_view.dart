@@ -516,6 +516,7 @@ class _NastavniPlanViewState extends State<NastavniPlanView> {
                               flex: 1,
                               child: Text(
                                 'Opcije',
+                                textAlign: TextAlign.end,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,

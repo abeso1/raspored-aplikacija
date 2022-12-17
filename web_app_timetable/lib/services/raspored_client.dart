@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// TODO(amer): dodati for loop da getta dok ne dobije pun raspored
 class RasporedClient {
   Future<Uint8List?> createRaspored({
     required List<Map<String, String>> timeslotList,
@@ -12,21 +11,63 @@ class RasporedClient {
     required List<Map<String, int>> lessonList,
   }) async {
     try {
-      var response = await http
-          .post(
-            Uri.parse("https://logic.leftjoin.ba/timeTable/solve"),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: jsonEncode(
-              {
-                'timeslotList': timeslotList,
-                'roomList': roomList,
-                'lessonList': lessonList,
+      for (var i = 0; i < 3; i++) {
+        var response = await http
+            .post(
+              Uri.parse("https://logic.leftjoin.ba/timeTable/solve"),
+              headers: {
+                "Content-Type": "application/json",
               },
-            ),
-          )
-          .timeout(const Duration(minutes: 10));
+              body: jsonEncode(
+                {
+                  'timeslotList': timeslotList,
+                  'roomList': roomList,
+                  'lessonList': lessonList,
+                },
+              ),
+            )
+            .timeout(const Duration(minutes: 10));
+
+        Map decoded = jsonDecode(utf8.decode(response.bodyBytes));
+
+        List decodedRaspored = decoded['lessonList'];
+        if (response.statusCode == 200) {
+          if (decodedRaspored.isNotEmpty) {
+            return response.bodyBytes;
+          }
+        }
+      }
+
+      return null;
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
       return '''
 {
@@ -2552,13 +2593,3 @@ class RasporedClient {
 }
 ''';
 */
-      if (response.statusCode == 200) {
-        return response.bodyBytes;
-      }
-      return null;
-    } catch (e) {
-      debugPrint(e.toString());
-      return null;
-    }
-  }
-}
