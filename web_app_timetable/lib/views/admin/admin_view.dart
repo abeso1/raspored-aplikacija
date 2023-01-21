@@ -15,6 +15,12 @@ class AdminView extends StatefulWidget {
 
 class _AdminViewState extends State<AdminView> {
   @override
+  void initState() {
+    Provider.of<SkoleNotifier>(context, listen: false).getSkole();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfff5f5f5),
@@ -395,6 +401,78 @@ class _AdminViewState extends State<AdminView> {
                 ),
                 Consumer<SkoleNotifier>(
                     builder: (context, skoleNotifier, child) {
+                  if (skoleNotifier.getSkoleLoading) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  if (skoleNotifier.getSkoleError) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Text(
+                        'Došlo je do greške!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+                  }
+                  if (skoleNotifier.skole.isEmpty) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Spacer(),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 40),
+                              const Text(
+                                'Hmm izgleda da niste dodali profesore',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                'Učinite to klikom na ovo dugme',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 80),
+                              Image.asset(
+                                'assets/images/empty.png',
+                                height: 200,
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                'assets/images/arrow.png',
+                                height: 100,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
                   return Expanded(
                     child: Column(
                       children: [
@@ -435,16 +513,6 @@ class _AdminViewState extends State<AdminView> {
                                 flex: 2,
                                 child: Text(
                                   'Mail',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  'Lozinka',
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,

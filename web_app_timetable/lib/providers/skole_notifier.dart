@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:web_app_timetable/services/skola_client.dart';
 import '../models/skola/skola.dart';
 import '../models/skola/skola_id.dart';
 
 class SkoleNotifier extends ChangeNotifier {
-  List<Skola> skole = [
-    Skola(
-      id: SkolaId(value: 1),
-      naziv: 'Srednja Škola Travnik',
-      adresa: 'Travnička bb, Travnik',
-      email: 'skola@admin.com',
-      lozinka: 'skola1234',
-    ),
-  ];
+  bool getSkoleError = false;
+  bool getSkoleLoading = true;
+  List<Skola> skole = [];
+  Map<SkolaId, Skola> skoleMapped = {};
 
   removeSkolu(SkolaId skolaId) {
     skole.removeWhere((element) => element.id == skolaId);
@@ -57,6 +53,18 @@ class SkoleNotifier extends ChangeNotifier {
 
   setLozinkaDialog(String? value) {
     lozinkaDialog = value;
+    notifyListeners();
+  }
+
+  getSkole() async {
+    try {
+      skole = await SkolaClient().getSkole();
+      getSkoleLoading = false;
+      getSkoleError = false;
+    } catch (e) {
+      getSkoleLoading = false;
+      getSkoleError = true;
+    }
     notifyListeners();
   }
 }
