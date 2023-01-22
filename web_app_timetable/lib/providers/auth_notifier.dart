@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AuthNotifier extends ChangeNotifier {
-  bool userLoggedIn = false;
-  UserType userType = UserType.none;
+  //bool userLoggedIn = false;
+  //UserType userType = UserType.none;
+  bool userLoggedIn = true;
+  UserType userType = UserType.skola;
 
   Future<bool> login(String mail, String password) async {
     await Future.delayed(const Duration(seconds: 1));

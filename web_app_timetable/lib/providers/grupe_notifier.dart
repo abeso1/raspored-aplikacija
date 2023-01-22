@@ -73,9 +73,11 @@ class GrupeNotifier extends ChangeNotifier {
 
   String? odjeljenjeDialog;
 
-  setOdjeljenjeDialog(String? value) {
+  setOdjeljenjeDialog(String? value, {bool notify = true}) {
     odjeljenjeDialog = value;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }
 

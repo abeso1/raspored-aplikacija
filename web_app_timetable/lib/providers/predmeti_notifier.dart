@@ -75,9 +75,11 @@ class PredmetiNotifier extends ChangeNotifier {
 
   String? predmetDialog;
 
-  setPredmetDialog(String? value) {
+  setPredmetDialog(String? value, {bool notify = true}) {
     predmetDialog = value;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }
 

@@ -74,9 +74,11 @@ class UcioniceNotifier extends ChangeNotifier {
 
   String? ucionicaDialog;
 
-  setUcionicaDialog(String? value) {
+  setUcionicaDialog(String? value, {bool notify = true}) {
     ucionicaDialog = value;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }
 

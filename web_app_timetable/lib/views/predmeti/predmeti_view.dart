@@ -106,6 +106,8 @@ class _PredmetiViewState extends State<PredmetiView> {
                     flex: 3,
                     child: InkWell(
                       onTap: () {
+                        Provider.of<PredmetiNotifier>(context, listen: false)
+                            .setPredmetDialog(null, notify: false);
                         showDialog(
                           context: context,
                           builder: (context) => Dialog(
@@ -393,6 +395,194 @@ class _PredmetiViewState extends State<PredmetiView> {
                                   ),
                                 ),
                                 const Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    Provider.of<PredmetiNotifier>(context,
+                                            listen: false)
+                                        .setPredmetDialog(predmet.naslov,
+                                            notify: false);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Consumer<PredmetiNotifier>(
+                                          builder: (context, predmetiNotifier,
+                                              child) {
+                                            return Container(
+                                              width: 800,
+                                              height: 600,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 80,
+                                                      vertical: 60),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Izmjeni predmet',
+                                                        style: TextStyle(
+                                                          fontSize: 30,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: const Icon(
+                                                          size: 40,
+                                                          Icons.close,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 24),
+                                                  const Text(
+                                                    'Izmjeni naziv predmeta',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 40),
+                                                  const SizedBox(height: 22),
+                                                  TextFormField(
+                                                    initialValue:
+                                                        predmet.naslov,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(3),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                          const Color.fromRGBO(
+                                                              9, 30, 66, 0.04),
+                                                      hintText:
+                                                          'Naziv predmeta',
+                                                      hintStyle:
+                                                          const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    onChanged: (value) =>
+                                                        predmetiNotifier
+                                                            .setPredmetDialog(
+                                                                value),
+                                                  ),
+                                                  const Spacer(),
+                                                  Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        3),
+                                                            border: Border.all(
+                                                                color: const Color(
+                                                                    0xff8d8d8d),
+                                                                width: 1),
+                                                          ),
+                                                          height: 50,
+                                                          child: const Center(
+                                                            child: Text(
+                                                              'Odustani',
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 15),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: InkWell(
+                                                          onTap: predmetiNotifier
+                                                                      .predmetDialog !=
+                                                                  null
+                                                              ? () async {
+                                                                  ReusableLoader
+                                                                      .showLoader(
+                                                                          context);
+
+                                                                  ReusableLoader
+                                                                      .popLoader();
+                                                                  // ignore: use_build_context_synchronously
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                }
+                                                              : null,
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          3),
+                                                              color: predmetiNotifier
+                                                                          .predmetDialog !=
+                                                                      null
+                                                                  ? AppColors
+                                                                      .mainGreen
+                                                                  : const Color(
+                                                                      0xff8d8d8d),
+                                                            ),
+                                                            height: 50,
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Izmjeni predmet',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Color(0xff4b4b4b),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
                                 InkWell(
                                   onTap: () {
                                     predmetiNotifier.removePredmet(predmet.id);

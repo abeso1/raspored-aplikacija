@@ -104,6 +104,8 @@ class _GrupeViewState extends State<GrupeView> {
                     flex: 3,
                     child: InkWell(
                       onTap: () {
+                        Provider.of<GrupeNotifier>(context, listen: false)
+                            .setOdjeljenjeDialog(null, notify: false);
                         showDialog(
                           context: context,
                           builder: (context) => Dialog(
@@ -389,6 +391,193 @@ class _GrupeViewState extends State<GrupeView> {
                                   ),
                                 ),
                                 const Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    Provider.of<GrupeNotifier>(context,
+                                            listen: false)
+                                        .setOdjeljenjeDialog(grupa.naslov,
+                                            notify: false);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Consumer<GrupeNotifier>(
+                                          builder:
+                                              (context, grupeNotifier, child) {
+                                            return Container(
+                                              width: 800,
+                                              height: 600,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 80,
+                                                      vertical: 60),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Izmjeni odjeljenje',
+                                                        style: TextStyle(
+                                                          fontSize: 30,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: const Icon(
+                                                          size: 40,
+                                                          Icons.close,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 24),
+                                                  const Text(
+                                                    'Izmjenite naziv odjeljena',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 40),
+                                                  const SizedBox(height: 22),
+                                                  TextFormField(
+                                                    initialValue: grupa.naslov,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(3),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                          const Color.fromRGBO(
+                                                              9, 30, 66, 0.04),
+                                                      hintText:
+                                                          'Naziv odjeljenja',
+                                                      hintStyle:
+                                                          const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    onChanged: (value) =>
+                                                        grupeNotifier
+                                                            .setOdjeljenjeDialog(
+                                                                value),
+                                                  ),
+                                                  const Spacer(),
+                                                  Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        3),
+                                                            border: Border.all(
+                                                                color: const Color(
+                                                                    0xff8d8d8d),
+                                                                width: 1),
+                                                          ),
+                                                          height: 50,
+                                                          child: const Center(
+                                                            child: Text(
+                                                              'Odustani',
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 15),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: InkWell(
+                                                          onTap: grupeNotifier
+                                                                      .odjeljenjeDialog !=
+                                                                  null
+                                                              ? () async {
+                                                                  ReusableLoader
+                                                                      .showLoader(
+                                                                          context);
+
+                                                                  ReusableLoader
+                                                                      .popLoader();
+                                                                  // ignore: use_build_context_synchronously
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                }
+                                                              : null,
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          3),
+                                                              color: grupeNotifier
+                                                                          .odjeljenjeDialog !=
+                                                                      null
+                                                                  ? AppColors
+                                                                      .mainGreen
+                                                                  : const Color(
+                                                                      0xff8d8d8d),
+                                                            ),
+                                                            height: 50,
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Izmjeni odjeljenje',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Color(0xff4b4b4b),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
                                 InkWell(
                                   onTap: () {
                                     grupeNotifier.removeGrupe(grupa.id);

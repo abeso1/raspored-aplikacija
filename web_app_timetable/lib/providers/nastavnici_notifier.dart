@@ -65,9 +65,11 @@ class NastavniciNotifier extends ChangeNotifier {
 
   String? nastavnikDialog;
 
-  setNastavnikDialog(String? value) {
+  setNastavnikDialog(String? value, {bool notify = true}) {
     nastavnikDialog = value;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 
   removeNastavnik(NastavnikId nastavnikId) async {
