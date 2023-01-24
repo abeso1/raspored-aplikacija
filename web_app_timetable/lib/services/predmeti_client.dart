@@ -32,9 +32,25 @@ class PredmetiClient {
     return predmeti;
   }
 
-    Future<void> removePredmet(int predmetId) async {
+  Future<void> removePredmet(int predmetId) async {
     await http.delete(
       Uri.parse("$backendUrl/predmet/$predmetId"),
+    );
+  }
+
+  Future<void> addPredmet(String predmet) async {
+    await http.post(
+      Uri.parse("$backendUrl/predmet"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(
+        {
+          'naslov': predmet,
+          'skola_id': 1,
+          'css': ''
+        },
+      ),
     );
   }
 }

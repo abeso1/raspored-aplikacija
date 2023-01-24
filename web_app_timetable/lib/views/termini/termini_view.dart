@@ -5,6 +5,7 @@ import 'package:web_app_timetable/providers/termini_notifier.dart';
 import 'package:web_app_timetable/shared/theme/colors.dart';
 
 import '../../models/termin/dan.dart';
+import '../../shared/widgets/loader.dart';
 
 class TerminiView extends StatefulWidget {
   const TerminiView({super.key});
@@ -40,29 +41,383 @@ class _TerminiViewState extends State<TerminiView> {
                 const SizedBox(width: 30),
                 Expanded(
                     flex: 3,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.mainGreen,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(
-                              Icons.add,
-                              color: Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        Provider.of<TerminiNotifier>(context, listen: false)
+                            .setTerminStartDialog(null, notify: false);
+                        Provider.of<TerminiNotifier>(context, listen: false)
+                            .setTerminEndDialog(null, notify: false);
+                        Provider.of<TerminiNotifier>(context, listen: false)
+                            .setTerminDayDialog(null, notify: false);
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Consumer<TerminiNotifier>(
+                              builder: (context, terminiNotifier, child) {
+                                final hour1 = terminiNotifier
+                                    .terminStartDialog?.hour
+                                    .toString()
+                                    .padLeft(2, '0');
+                                final minute1 = terminiNotifier
+                                    .terminStartDialog?.minute
+                                    .toString()
+                                    .padLeft(2, '0');
+
+                                final TextEditingController
+                                    textEditingController1 =
+                                    TextEditingController(
+                                  text:
+                                      terminiNotifier.terminStartDialog == null
+                                          ? null
+                                          : '$hour1:$minute1',
+                                );
+
+                                final hour2 = terminiNotifier
+                                    .terminEndDialog?.hour
+                                    .toString()
+                                    .padLeft(2, '0');
+                                final minute2 = terminiNotifier
+                                    .terminEndDialog?.minute
+                                    .toString()
+                                    .padLeft(2, '0');
+
+                                final TextEditingController
+                                    textEditingController2 =
+                                    TextEditingController(
+                                  text: terminiNotifier.terminEndDialog == null
+                                      ? null
+                                      : '$hour2:$minute2',
+                                );
+
+                                final GlobalKey<FormState> form1Key =
+                                    GlobalKey();
+
+                                return Container(
+                                  width: 800,
+                                  height: 600,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 80, vertical: 60),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            'Dodaj termin',
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Icon(
+                                              size: 40,
+                                              Icons.close,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(height: 24),
+                                      const Text(
+                                        'Unesite dan, početak i kraj termina kojeg želite dodati',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 40),
+                                      Row(
+                                        children: [
+                                          ...Dan.values
+                                              .map((e) => Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Radio(
+                                                        value: e,
+                                                        groupValue:
+                                                            terminiNotifier
+                                                                .terminDayDialog,
+                                                        onChanged: (value) {
+                                                          terminiNotifier
+                                                              .setTerminDayDialog(
+                                                                  value);
+                                                        },
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      Text(daniMappedNaBosanski[
+                                                          e]!),
+                                                      const SizedBox(width: 10),
+                                                    ],
+                                                  ))
+                                              .toList()
+                                        ],
+                                      ),
+                                      const SizedBox(height: 22),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 300,
+                                            child: Form(
+                                              key: form1Key,
+                                              child: TextFormField(
+                                                controller:
+                                                    textEditingController1,
+                                                onTap: () async {
+                                                  final newTime =
+                                                      await showTimePicker(
+                                                    context: context,
+                                                    initialTime:
+                                                        TimeOfDay.now(),
+                                                    initialEntryMode:
+                                                        TimePickerEntryMode
+                                                            .input,
+                                                    builder: (final context,
+                                                            final child) =>
+                                                        MediaQuery(
+                                                      data:
+                                                          MediaQuery.of(context)
+                                                              .copyWith(
+                                                        alwaysUse24HourFormat:
+                                                            true,
+                                                      ),
+                                                      child: child!,
+                                                    ),
+                                                  );
+                                                  terminiNotifier
+                                                      .setTerminStartDialog(
+                                                          newTime);
+                                                },
+                                                readOnly: true,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            3),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      const Color.fromRGBO(
+                                                          9, 30, 66, 0.04),
+                                                  hintText: 'Početak',
+                                                  hintStyle: const TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                validator: (value) {
+                                                  final dateNow =
+                                                      DateTime.now();
+                                                  final time1 =
+                                                      textEditingController1
+                                                          .text
+                                                          .split(":");
+                                                  final time2 =
+                                                      textEditingController2
+                                                          .text
+                                                          .split(":");
+                                                  final start = DateTime(
+                                                    dateNow.year,
+                                                    dateNow.month,
+                                                    dateNow.day,
+                                                    int.parse(time1.first),
+                                                    int.parse(time1.last),
+                                                  );
+                                                  final end = DateTime(
+                                                    dateNow.year,
+                                                    dateNow.month,
+                                                    dateNow.day,
+                                                    int.parse(time2.first),
+                                                    int.parse(time2.last),
+                                                  );
+                                                  if (start.isAfter(end)) {
+                                                    return 'Početka ne može biti poslije kraja';
+                                                  }
+                                                  if (start
+                                                      .isAtSameMomentAs(end)) {
+                                                    return 'Početka i kraj ne mogu biti u isto vrijeme';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 22),
+                                          SizedBox(
+                                            width: 300,
+                                            child: TextFormField(
+                                              controller:
+                                                  textEditingController2,
+                                              onTap: () async {
+                                                final newTime =
+                                                    await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.now(),
+                                                  initialEntryMode:
+                                                      TimePickerEntryMode.input,
+                                                  builder: (final context,
+                                                          final child) =>
+                                                      MediaQuery(
+                                                    data: MediaQuery.of(context)
+                                                        .copyWith(
+                                                      alwaysUse24HourFormat:
+                                                          true,
+                                                    ),
+                                                    child: child!,
+                                                  ),
+                                                );
+                                                terminiNotifier
+                                                    .setTerminEndDialog(
+                                                        newTime);
+                                              },
+                                              readOnly: true,
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(3),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    9, 30, 66, 0.04),
+                                                hintText: 'Kraj',
+                                                hintStyle: const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(3),
+                                                border: Border.all(
+                                                    color:
+                                                        const Color(0xff8d8d8d),
+                                                    width: 1),
+                                              ),
+                                              height: 50,
+                                              child: const Center(
+                                                child: Text(
+                                                  'Odustani',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 15),
+                                          Expanded(
+                                            flex: 2,
+                                            child: InkWell(
+                                              onTap: terminiNotifier
+                                                              .terminStartDialog !=
+                                                          null &&
+                                                      terminiNotifier
+                                                              .terminEndDialog !=
+                                                          null &&
+                                                      terminiNotifier
+                                                              .terminDayDialog !=
+                                                          null
+                                                  ? () async {
+                                                      if (form1Key.currentState!
+                                                          .validate()) {
+                                                        ReusableLoader
+                                                            .showLoader(
+                                                                context);
+                                                        await terminiNotifier
+                                                            .addTermin();
+
+                                                        ReusableLoader
+                                                            .popLoader();
+                                                        // ignore: use_build_context_synchronously
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }
+                                                    }
+                                                  : null,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(3),
+                                                  color: terminiNotifier
+                                                                  .terminStartDialog !=
+                                                              null &&
+                                                          terminiNotifier
+                                                                  .terminEndDialog !=
+                                                              null &&
+                                                          terminiNotifier
+                                                                  .terminDayDialog !=
+                                                              null
+                                                      ? AppColors.mainGreen
+                                                      : const Color(0xff8d8d8d),
+                                                ),
+                                                height: 50,
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Dodaj termin',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Dodaj novi termin',
-                              style: TextStyle(
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.mainGreen,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(
+                                Icons.add,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
                               ),
-                            )
-                          ],
+                              SizedBox(width: 10),
+                              Text(
+                                'Dodaj novi termin',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ))

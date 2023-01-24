@@ -37,4 +37,19 @@ class UcioniceClient {
       Uri.parse("$backendUrl/ucionica/$ucionicaId"),
     );
   }
+
+  Future<void> addUcionica(String ucionica) async {
+    await http.post(
+      Uri.parse("$backendUrl/ucionica"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(
+        {
+          'naziv': ucionica,
+          'skola_id': 1,
+        },
+      ),
+    );
+  }
 }

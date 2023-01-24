@@ -80,6 +80,15 @@ class UcioniceNotifier extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> addUcionica() async {
+    try {
+      await UcioniceClient().addUcionica(ucionicaDialog!);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getUcionice();
+  }
 }
 
 enum UcioniceSort {

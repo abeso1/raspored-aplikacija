@@ -33,7 +33,8 @@ class SkolaClient {
     return skole;
   }
 
-  /*Future<void> addSkola(String predmet) async {
+  Future<void> addSkolu(String naziv, String adresa, String login, String sifra,
+      String email) async {
     await http.post(
       Uri.parse("$backendUrl/skola"),
       headers: {
@@ -41,15 +42,19 @@ class SkolaClient {
       },
       body: jsonEncode(
         {
-          'predmet': predmet,
+          'naziv': naziv,
+          'adresa': adresa,
+          'login': login,
+          'sifra': sifra,
+          'email': email,
         },
       ),
     );
   }
 
-  Future<void> removeNastavnik(int nastavnikId) async {
+  Future<void> removeSkola(int skolaId) async {
     await http.delete(
-      Uri.parse("$backendUrl/nastavnik/$nastavnikId"),
+      Uri.parse("$backendUrl/skola/$skolaId"),
     );
-  }*/
+  }
 }

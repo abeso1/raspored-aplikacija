@@ -32,6 +32,7 @@ class RasporedNotifier extends ChangeNotifier {
   List<Ucionica> ucionice = [];
   Set<Raspored> raspored = {};
   bool getRasporedError = false;
+  bool getRasporedLoading = true;
 
   List<GrupaId> grupe = [];
   List<NastavnikId> nastavnici = [];
@@ -43,6 +44,21 @@ class RasporedNotifier extends ChangeNotifier {
 
   TimeOfDay? najraniji;
   TimeOfDay? najkasniji;
+
+  getRaspored() async {
+    try {
+      var response = await RasporedClient().getRaspored();
+
+      if (response != null) {
+        Map decoded = jsonDecode(response);
+        _srediRaspored(decoded);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getRasporedLoading = false;
+    notifyListeners();
+  }
 
   Future<void> createRaspored() async {
     getRasporedError = false;
@@ -62,6 +78,12 @@ class RasporedNotifier extends ChangeNotifier {
       return;
     }
 
+    Map decoded = jsonDecode(utf8.decode(response));
+
+    _srediRaspored(decoded);
+  }
+
+  _srediRaspored(Map decoded) {
     termini = [];
     ucionice = [];
     raspored = {};
@@ -77,8 +99,6 @@ class RasporedNotifier extends ChangeNotifier {
 
     najraniji = null;
     najkasniji = null;
-
-    Map decoded = jsonDecode(utf8.decode(response));
 
     List decodedTermini = decoded['timeslotList'];
     termini = [];

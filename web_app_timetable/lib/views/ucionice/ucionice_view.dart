@@ -209,6 +209,8 @@ class _UcioniceViewState extends State<UcioniceView> {
                                                   ? () async {
                                                       ReusableLoader.showLoader(
                                                           context);
+                                                      await ucioniceNotifier
+                                                          .addUcionica();
 
                                                       ReusableLoader
                                                           .popLoader();
@@ -395,7 +397,7 @@ class _UcioniceViewState extends State<UcioniceView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                InkWell(
+                                /*InkWell(
                                   onTap: () {
                                     Provider.of<UcioniceNotifier>(context,
                                             listen: false)
@@ -459,7 +461,8 @@ class _UcioniceViewState extends State<UcioniceView> {
                                                   const SizedBox(height: 40),
                                                   const SizedBox(height: 22),
                                                   TextFormField(
-                                                    initialValue: ucionica.naslov,
+                                                    initialValue:
+                                                        ucionica.naslov,
                                                     decoration: InputDecoration(
                                                       border:
                                                           OutlineInputBorder(
@@ -580,7 +583,7 @@ class _UcioniceViewState extends State<UcioniceView> {
                                     Icons.edit,
                                     color: Color(0xff4b4b4b),
                                   ),
-                                ),
+                                ),*/
                                 const SizedBox(width: 10),
                                 InkWell(
                                   onTap: () {

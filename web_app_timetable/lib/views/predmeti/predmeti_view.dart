@@ -209,7 +209,8 @@ class _PredmetiViewState extends State<PredmetiView> {
                                                   ? () async {
                                                       ReusableLoader.showLoader(
                                                           context);
-
+                                                      await predmetiNotifier
+                                                          .addPredmet();
                                                       ReusableLoader
                                                           .popLoader();
                                                       // ignore: use_build_context_synchronously
@@ -395,7 +396,7 @@ class _PredmetiViewState extends State<PredmetiView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                InkWell(
+                                /*InkWell(
                                   onTap: () {
                                     Provider.of<PredmetiNotifier>(context,
                                             listen: false)
@@ -581,7 +582,7 @@ class _PredmetiViewState extends State<PredmetiView> {
                                     Icons.edit,
                                     color: Color(0xff4b4b4b),
                                   ),
-                                ),
+                                ),*/
                                 const SizedBox(width: 10),
                                 InkWell(
                                   onTap: () {

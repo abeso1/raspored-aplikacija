@@ -81,6 +81,15 @@ class PredmetiNotifier extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> addPredmet() async {
+    try {
+      await PredmetiClient().addPredmet(predmetDialog!);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getPredmeti();
+  }
 }
 
 enum PredmetiSort {

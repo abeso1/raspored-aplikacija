@@ -135,4 +135,41 @@ class TerminiNotifier extends ChangeNotifier {
     }
     getTermini();
   }
+
+  TimeOfDay? terminStartDialog;
+
+  setTerminStartDialog(TimeOfDay? value, {bool notify = true}) {
+    terminStartDialog = value;
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  TimeOfDay? terminEndDialog;
+
+  setTerminEndDialog(TimeOfDay? value, {bool notify = true}) {
+    terminEndDialog = value;
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Dan? terminDayDialog;
+
+  setTerminDayDialog(Dan? value, {bool notify = true}) {
+    terminDayDialog = value;
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Future<void> addTermin() async {
+    try {
+      await TerminiClient()
+          .addTermin(terminStartDialog!, terminEndDialog!, terminDayDialog!);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getTermini();
+  }
 }

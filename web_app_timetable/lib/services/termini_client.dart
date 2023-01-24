@@ -41,9 +41,29 @@ class TerminiClient {
     return termini;
   }
 
-    Future<void> removeTermin(int terminId) async {
+  Future<void> removeTermin(int terminId) async {
     await http.delete(
       Uri.parse("$backendUrl/termin/$terminId"),
+    );
+  }
+
+  Future<void> addTermin(TimeOfDay start, TimeOfDay end, Dan day) async {
+    await http.post(
+      Uri.parse("$backendUrl/termin"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(
+        {
+          'dan': daniMappedNaEngleski[day],
+          'pocetak':
+              "${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}:00",
+          'kraj':
+              "${end.hour.toString().padLeft(2, '0')}:${end.minute.toString().padLeft(2, '0')}:00",
+          'skola_id': 1,
+          'smjena': 1,
+        },
+      ),
     );
   }
 }

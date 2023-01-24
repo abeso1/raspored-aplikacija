@@ -9,22 +9,29 @@ class SkoleNotifier extends ChangeNotifier {
   List<Skola> skole = [];
   Map<SkolaId, Skola> skoleMapped = {};
 
-  removeSkolu(SkolaId skolaId) {
-    skole.removeWhere((element) => element.id == skolaId);
-    notifyListeners();
+  removeSkolu(SkolaId skolaId) async {
+    try {
+      await SkolaClient().removeSkola(skolaId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getSkole();
   }
 
   addSkolu() async {
-    await Future.delayed(const Duration(seconds: 1));
-    skole.add(
-      Skola(
-        id: SkolaId(value: 1),
-        naziv: nazivDialog!,
-        adresa: adresaDialog!,
-        email: emailDialog!,
-        lozinka: lozinkaDialog!,
-      ),
-    );
+    try {
+      await SkolaClient().addSkolu(
+        nazivDialog!,
+        adresaDialog!,
+        lozinkaDialog!,
+        lozinkaDialog!,
+        emailDialog!,
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    await getSkole();
     notifyListeners();
   }
 

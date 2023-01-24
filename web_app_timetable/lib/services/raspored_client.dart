@@ -3,6 +3,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+
+import '../shared/global_variables.dart';
 
 class RasporedClient {
   Future<Uint8List?> createRaspored({
@@ -29,16 +32,46 @@ class RasporedClient {
             .timeout(const Duration(minutes: 10));
 
         Map decoded = jsonDecode(utf8.decode(response.bodyBytes));
-
+//  "2022-12-13 21:45:55",
         List decodedRaspored = decoded['lessonList'];
         if (response.statusCode == 200) {
           if (decodedRaspored.isNotEmpty) {
+            await http.post(
+              Uri.parse("$backendUrl/raspored"),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: jsonEncode(
+                {
+                  "datum":
+                      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                  "podaci": jsonEncode(decoded),
+                  "skola_id": 1
+                },
+              ),
+            );
+
             return response.bodyBytes;
           }
         }
       }
 
       return null;
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+
+  Future<String?> getRaspored() async {
+    try {
+      var response = await http.get(
+        Uri.parse("$backendUrl/raspored"),
+      );
+
+      Map decoded = jsonDecode(response.body);
+
+      return (decoded['data'] as List<dynamic>).last['podaci'];
     } catch (e) {
       debugPrint(e.toString());
       return null;

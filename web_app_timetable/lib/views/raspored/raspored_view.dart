@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_app_timetable/providers/grupe_notifier.dart';
-import 'package:web_app_timetable/providers/nastavni_plan_notifier.dart';
 import 'package:web_app_timetable/providers/nastavnici_notifier.dart';
 import 'package:web_app_timetable/providers/predmeti_notifier.dart';
 import 'package:web_app_timetable/providers/raspored_notifier.dart';
@@ -10,8 +9,6 @@ import 'package:web_app_timetable/services/pdf_service.dart';
 
 import '../../models/termin/dan.dart';
 import '../../models/termin/termin.dart';
-import '../../providers/termini_notifier.dart';
-import '../../providers/ucionice_notifier.dart';
 import '../../shared/theme/colors.dart';
 
 class RasporedView extends StatefulWidget {
@@ -24,17 +21,7 @@ class RasporedView extends StatefulWidget {
 class _RasporedViewState extends State<RasporedView> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-            value: RasporedNotifier(
-          nastavniPlanNotifier: Provider.of<NastavniPlanNotifier>(context),
-          terminiNotifier: Provider.of<TerminiNotifier>(context),
-          ucioniceNotifier: Provider.of<UcioniceNotifier>(context),
-        )),
-      ],
-      child: const RasporedWidget(),
-    );
+    return const RasporedWidget();
   }
 }
 
@@ -70,6 +57,16 @@ class _RasporedWidgetState extends State<RasporedWidget> {
     const Color(0xff000066),
     const Color(0xff666600),
   ];
+
+  @override
+  void initState() {
+    Provider.of<RasporedNotifier>(context, listen: false).getRasporedLoading =
+        true;
+    Provider.of<RasporedNotifier>(context, listen: false).getRasporedError =
+        false;
+    Provider.of<RasporedNotifier>(context, listen: false).getRaspored();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -315,6 +312,14 @@ class _RasporedWidgetState extends State<RasporedWidget> {
                 builder: (context, nastavniciNotifier, child) {
               return Consumer<RasporedNotifier>(
                 builder: (context, rasporedNotifier, child) {
+                  if (rasporedNotifier.getRasporedLoading) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
                   if (rasporedNotifier.getRasporedError) {
                     return const Padding(
                       padding: EdgeInsets.only(top: 30),
