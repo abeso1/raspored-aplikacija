@@ -3,6 +3,8 @@ import 'package:web_app_timetable/models/ucionica/ucionica.dart';
 import 'package:web_app_timetable/models/ucionica/ucionica_id.dart';
 import 'package:web_app_timetable/services/ucionice_client.dart';
 
+import '../models/skola/skola_id.dart';
+
 Map ucioniceSort = {
   UcioniceSort.atoz: 'Sortiraj: A-Z',
   UcioniceSort.ztoa: 'Sortiraj: Z-A',
@@ -17,9 +19,15 @@ class UcioniceNotifier extends ChangeNotifier {
   UcioniceSort ucioniceSort = UcioniceSort.atoz;
   String ucionicaFilter = '';
 
+  SkolaId? skolaId;
+
+  setSkolaId(SkolaId value) {
+    skolaId = value;
+  }
+
   getUcionice() async {
     try {
-      unfilteredUcionice = await UcioniceClient().getUcionice();
+      unfilteredUcionice = await UcioniceClient().getUcionice(skolaId!);
       _setUcionice(unfilteredUcionice);
       getUcioniceLoading = false;
       getUcioniceError = false;

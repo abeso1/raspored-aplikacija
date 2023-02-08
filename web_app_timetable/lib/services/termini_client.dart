@@ -10,9 +10,9 @@ import 'package:web_app_timetable/models/skola/skola_id.dart';
 import '../shared/global_variables.dart';
 
 class TerminiClient {
-  Future<List<Termin>> getTermini() async {
+  Future<List<Termin>> getTermini(SkolaId skolaId) async {
     var response = await http.get(
-      Uri.parse("$backendUrl/termin"),
+      Uri.parse("$backendUrl/termin/filter?skola_id=${skolaId.value}"),
     );
 
     List<Termin> termini = [];

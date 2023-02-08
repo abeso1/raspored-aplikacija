@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:web_app_timetable/models/skola/skola_id.dart';
 
 import '../shared/global_variables.dart';
 
@@ -63,10 +64,10 @@ class RasporedClient {
     }
   }
 
-  Future<String?> getRaspored() async {
+  Future<String?> getRaspored(SkolaId skolaId) async {
     try {
       var response = await http.get(
-        Uri.parse("$backendUrl/raspored"),
+        Uri.parse("$backendUrl/raspored/filter?skola_id=${skolaId.value}"),
       );
 
       Map decoded = jsonDecode(response.body);

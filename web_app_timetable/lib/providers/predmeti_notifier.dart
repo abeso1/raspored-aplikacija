@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_app_timetable/models/predmet/predmet.dart';
+import 'package:web_app_timetable/models/skola/skola_id.dart';
 import 'package:web_app_timetable/services/predmeti_client.dart';
 
 import '../models/predmet/predmet_id.dart';
@@ -19,9 +20,15 @@ class PredmetiNotifier extends ChangeNotifier {
   PredmetiSort predmetiSort = PredmetiSort.atoz;
   String predmetFilter = '';
 
+  SkolaId? skolaId;
+
+  setSkolaId(SkolaId value) {
+    skolaId = value;
+  }
+
   getPredmeti() async {
     try {
-      unfilteredPredmeti = await PredmetiClient().getPredmeti();
+      unfilteredPredmeti = await PredmetiClient().getPredmeti(skolaId!);
       _setPredmeti(unfilteredPredmeti);
       getPredmetiLoading = false;
       getPredmetiError = false;

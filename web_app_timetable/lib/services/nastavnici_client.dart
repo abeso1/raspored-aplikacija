@@ -8,9 +8,9 @@ import 'package:web_app_timetable/models/skola/skola_id.dart';
 import '../shared/global_variables.dart';
 
 class NastavniciClient {
-  Future<List<Nastavnik>> getNastavnici() async {
+  Future<List<Nastavnik>> getNastavnici(SkolaId skolaId) async {
     var response = await http.get(
-      Uri.parse("$backendUrl/nastavnik"),
+      Uri.parse("$backendUrl/nastavnik/filter?skola_id=${skolaId.value}"),
     );
 
     List<Nastavnik> nastavnici = [];
@@ -40,7 +40,8 @@ class NastavniciClient {
       },
       body: jsonEncode(
         {
-          'predmet': predmet,
+          'naziv': predmet,
+          'skola_id': 1,
         },
       ),
     );

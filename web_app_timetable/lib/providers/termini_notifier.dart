@@ -16,9 +16,15 @@ class TerminiNotifier extends ChangeNotifier {
   List<String>? sati;
   late Map<Dan, List<Termin>> normalisedTermins;
 
+  SkolaId? skolaId;
+
+  setSkolaId(SkolaId value) {
+    skolaId = value;
+  }
+
   getTermini() async {
     try {
-      unfilteredTermini = await TerminiClient().getTermini();
+      unfilteredTermini = await TerminiClient().getTermini(skolaId!);
       _setTermini(unfilteredTermini);
       getTerminiLoading = false;
       getTerminiError = false;

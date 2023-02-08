@@ -210,6 +210,9 @@ class _NastavniciViewState extends State<NastavniciView> {
                                                       ReusableLoader.showLoader(
                                                           context);
 
+                                                      await nastavniciNotifier
+                                                          .addPredmet();
+
                                                       ReusableLoader
                                                           .popLoader();
                                                       // ignore: use_build_context_synchronously
@@ -395,7 +398,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                InkWell(
+                                /*InkWell(
                                   onTap: () {
                                     Provider.of<NastavniciNotifier>(context,
                                             listen: false)
@@ -581,7 +584,7 @@ class _NastavniciViewState extends State<NastavniciView> {
                                     Icons.edit,
                                     color: Color(0xff4b4b4b),
                                   ),
-                                ),
+                                ),*/
                                 const SizedBox(width: 10),
                                 InkWell(
                                   onTap: () {

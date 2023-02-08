@@ -11,10 +11,12 @@ import 'package:web_app_timetable/models/skola/skola_id.dart';
 import '../shared/global_variables.dart';
 
 class NastavniPlanClient {
-  Future<List<Plan>> getNastavniPlan() async {
+  Future<List<Plan>> getNastavniPlan(SkolaId skolaId) async {
     var response = await http.get(
       Uri.parse("$backendUrl/predavanje"),
     );
+
+    ///filter?skola_id=${skolaId.value}
 
     List<Plan> nastavniPlan = [];
 

@@ -8,9 +8,9 @@ import 'package:web_app_timetable/models/skola/skola_id.dart';
 import '../shared/global_variables.dart';
 
 class UcioniceClient {
-  Future<List<Ucionica>> getUcionice() async {
+  Future<List<Ucionica>> getUcionice(SkolaId skolaId) async {
     var response = await http.get(
-      Uri.parse("$backendUrl/ucionica"),
+      Uri.parse("$backendUrl/ucionica/filter?skola_id=${skolaId.value}"),
     );
 
     List<Ucionica> ucionice = [];

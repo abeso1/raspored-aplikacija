@@ -7,6 +7,7 @@ import 'package:web_app_timetable/models/nastavnik/nastavnik_id.dart';
 import 'package:web_app_timetable/models/raspored/raspored_id.dart';
 import 'package:web_app_timetable/models/termin/termin.dart';
 import 'package:web_app_timetable/models/ucionica/ucionica.dart';
+import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/services/raspored_client.dart';
 import '../models/predmet/predmet_id.dart';
 import '../models/raspored/raspored.dart';
@@ -21,11 +22,13 @@ class RasporedNotifier extends ChangeNotifier {
   final TerminiNotifier terminiNotifier;
   final UcioniceNotifier ucioniceNotifier;
   final NastavniPlanNotifier nastavniPlanNotifier;
+  final AuthNotifier authNotifier;
 
   RasporedNotifier({
     required this.terminiNotifier,
     required this.ucioniceNotifier,
     required this.nastavniPlanNotifier,
+    required this.authNotifier,
   });
 
   List<Termin> termini = [];
@@ -47,7 +50,7 @@ class RasporedNotifier extends ChangeNotifier {
 
   getRaspored() async {
     try {
-      var response = await RasporedClient().getRaspored();
+      var response = await RasporedClient().getRaspored(authNotifier.skolaId);
 
       if (response != null) {
         Map decoded = jsonDecode(response);

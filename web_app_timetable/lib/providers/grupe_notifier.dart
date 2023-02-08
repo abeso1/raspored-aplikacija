@@ -3,6 +3,7 @@ import 'package:web_app_timetable/models/grupa/grupa.dart';
 import 'package:web_app_timetable/services/grupe_client.dart';
 
 import '../models/grupa/grupa_id.dart';
+import '../models/skola/skola_id.dart';
 
 Map grupeSort = {
   GrupeSort.atoz: 'Sortiraj: A-Z',
@@ -19,9 +20,15 @@ class GrupeNotifier extends ChangeNotifier {
   GrupeSort grupeSort = GrupeSort.atoz;
   String grupaFilter = '';
 
+  SkolaId? skolaId;
+
+  setSkolaId(SkolaId value) {
+    skolaId = value;
+  }
+
   getGrupe() async {
     try {
-      unfilteredGrupe = await GrupeClient().getGrupe();
+      unfilteredGrupe = await GrupeClient().getGrupe(skolaId!);
       _setGrupe(unfilteredGrupe);
       getGrupeLoading = false;
       getGrupeError = false;
@@ -78,6 +85,15 @@ class GrupeNotifier extends ChangeNotifier {
     if (notify) {
       notifyListeners();
     }
+  }
+
+  Future<void> addGrupa() async {
+    try {
+      await GrupeClient().addGrupa(odjeljenjeDialog!);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getGrupe();
   }
 }
 

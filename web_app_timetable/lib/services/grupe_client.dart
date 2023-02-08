@@ -8,9 +8,9 @@ import 'package:web_app_timetable/models/skola/skola_id.dart';
 import '../shared/global_variables.dart';
 
 class GrupeClient {
-  Future<List<Grupa>> getGrupe() async {
+  Future<List<Grupa>> getGrupe(SkolaId skolaId) async {
     var response = await http.get(
-      Uri.parse("$backendUrl/grupa"),
+      Uri.parse("$backendUrl/grupa/filter?skola_id=${skolaId.value}"),
     );
 
     List<Grupa> grupe = [];
@@ -35,6 +35,21 @@ class GrupeClient {
   Future<void> removeGrupa(int grupaId) async {
     await http.delete(
       Uri.parse("$backendUrl/grupa/$grupaId"),
+    );
+  }
+
+  Future<void> addGrupa(String grupa) async {
+    await http.post(
+      Uri.parse("$backendUrl/grupa"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(
+        {
+          'naziv': grupa,
+          'skola_id': 1,
+        },
+      ),
     );
   }
 }

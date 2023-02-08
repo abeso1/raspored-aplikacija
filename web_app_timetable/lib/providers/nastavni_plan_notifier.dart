@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_app_timetable/models/plan/plan_id.dart';
 import '../models/plan/plan.dart';
+import '../models/skola/skola_id.dart';
 import '../services/nastavni_plan_client.dart';
 
 class NastavniPlanNotifier extends ChangeNotifier {
@@ -9,9 +10,16 @@ class NastavniPlanNotifier extends ChangeNotifier {
   List<Plan> nastavniPlan = [];
   List<Plan> unfilteredNastavniPlan = [];
 
+  SkolaId? skolaId;
+
+  setSkolaId(SkolaId value) {
+    skolaId = value;
+  }
+
   getNastavniPlan() async {
     try {
-      unfilteredNastavniPlan = await NastavniPlanClient().getNastavniPlan();
+      unfilteredNastavniPlan =
+          await NastavniPlanClient().getNastavniPlan(skolaId!);
       _setNastavniPlan(unfilteredNastavniPlan);
       getNastavniPlanLoading = false;
       getNastavniPlanError = false;

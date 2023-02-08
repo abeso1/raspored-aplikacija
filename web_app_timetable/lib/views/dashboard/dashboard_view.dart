@@ -29,12 +29,27 @@ class DashboardView extends StatefulWidget {
 class _DashboardViewState extends State<DashboardView> {
   @override
   void initState() {
+    final AuthNotifier authNotifier =
+        Provider.of<AuthNotifier>(context, listen: false);
+    Provider.of<PredmetiNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId);
     Provider.of<PredmetiNotifier>(context, listen: false).getPredmeti();
+    Provider.of<UcioniceNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId);
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
+    Provider.of<NastavniciNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId);
     Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
+    Provider.of<GrupeNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId);
     Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
+    Provider.of<TerminiNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId);
     Provider.of<TerminiNotifier>(context, listen: false).getTermini();
+    Provider.of<NastavniPlanNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId);
     Provider.of<NastavniPlanNotifier>(context, listen: false).getNastavniPlan();
+
     super.initState();
   }
 
@@ -47,6 +62,7 @@ class _DashboardViewState extends State<DashboardView> {
           nastavniPlanNotifier: Provider.of<NastavniPlanNotifier>(context),
           terminiNotifier: Provider.of<TerminiNotifier>(context),
           ucioniceNotifier: Provider.of<UcioniceNotifier>(context),
+          authNotifier: Provider.of<AuthNotifier>(context),
         )),
       ],
       child: Scaffold(

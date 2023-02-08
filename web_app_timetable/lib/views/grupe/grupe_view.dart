@@ -208,6 +208,9 @@ class _GrupeViewState extends State<GrupeView> {
                                                       ReusableLoader.showLoader(
                                                           context);
 
+                                                      await grupeNotifier
+                                                          .addGrupa();
+
                                                       ReusableLoader
                                                           .popLoader();
                                                       // ignore: use_build_context_synchronously
@@ -391,7 +394,7 @@ class _GrupeViewState extends State<GrupeView> {
                                   ),
                                 ),
                                 const Spacer(),
-                                InkWell(
+                                /*InkWell(
                                   onTap: () {
                                     Provider.of<GrupeNotifier>(context,
                                             listen: false)
@@ -576,7 +579,7 @@ class _GrupeViewState extends State<GrupeView> {
                                     Icons.edit,
                                     color: Color(0xff4b4b4b),
                                   ),
-                                ),
+                                ),*/
                                 const SizedBox(width: 10),
                                 InkWell(
                                   onTap: () {

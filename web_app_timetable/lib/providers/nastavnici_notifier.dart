@@ -3,6 +3,8 @@ import 'package:web_app_timetable/models/nastavnik/nastavnik.dart';
 import 'package:web_app_timetable/models/nastavnik/nastavnik_id.dart';
 import 'package:web_app_timetable/services/nastavnici_client.dart';
 
+import '../models/skola/skola_id.dart';
+
 Map nastavniciSort = {
   NastavniciSort.atoz: 'Sortiraj: A-Z',
   NastavniciSort.ztoa: 'Sortiraj: Z-A',
@@ -18,9 +20,15 @@ class NastavniciNotifier extends ChangeNotifier {
   NastavniciSort nastavniciSort = NastavniciSort.atoz;
   String nastavnikFilter = '';
 
+  SkolaId? skolaId;
+
+  setSkolaId(SkolaId value) {
+    skolaId = value;
+  }
+
   getNastavnici() async {
     try {
-      unfilteredNastavnici = await NastavniciClient().getNastavnici();
+      unfilteredNastavnici = await NastavniciClient().getNastavnici(skolaId!);
       _setNastavnici(unfilteredNastavnici);
       getNastavniciLoading = false;
       getNastavniciError = false;
@@ -63,6 +71,15 @@ class NastavniciNotifier extends ChangeNotifier {
     });
   }
 
+  removeNastavnik(NastavnikId nastavnikId) async {
+    try {
+      await NastavniciClient().removeNastavnik(nastavnikId.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    getNastavnici();
+  }
+
   String? nastavnikDialog;
 
   setNastavnikDialog(String? value, {bool notify = true}) {
@@ -72,9 +89,9 @@ class NastavniciNotifier extends ChangeNotifier {
     }
   }
 
-  removeNastavnik(NastavnikId nastavnikId) async {
+  Future<void> addPredmet() async {
     try {
-      await NastavniciClient().removeNastavnik(nastavnikId.value);
+      await NastavniciClient().addNastavnik(nastavnikDialog!);
     } catch (e) {
       debugPrint(e.toString());
     }
