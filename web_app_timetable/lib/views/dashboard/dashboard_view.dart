@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:web_app_timetable/providers/add_nastavni_plan_notifier.dart';
 import 'package:web_app_timetable/providers/auth_notifier.dart';
 import 'package:web_app_timetable/providers/nastavni_plan_notifier.dart';
 import 'package:web_app_timetable/providers/tab_notifier.dart';
@@ -32,24 +33,25 @@ class _DashboardViewState extends State<DashboardView> {
     final AuthNotifier authNotifier =
         Provider.of<AuthNotifier>(context, listen: false);
     Provider.of<PredmetiNotifier>(context, listen: false)
-        .setSkolaId(authNotifier.skolaId);
+        .setSkolaId(authNotifier.skolaId!);
     Provider.of<PredmetiNotifier>(context, listen: false).getPredmeti();
     Provider.of<UcioniceNotifier>(context, listen: false)
-        .setSkolaId(authNotifier.skolaId);
+        .setSkolaId(authNotifier.skolaId!);
     Provider.of<UcioniceNotifier>(context, listen: false).getUcionice();
     Provider.of<NastavniciNotifier>(context, listen: false)
-        .setSkolaId(authNotifier.skolaId);
+        .setSkolaId(authNotifier.skolaId!);
     Provider.of<NastavniciNotifier>(context, listen: false).getNastavnici();
     Provider.of<GrupeNotifier>(context, listen: false)
-        .setSkolaId(authNotifier.skolaId);
+        .setSkolaId(authNotifier.skolaId!);
     Provider.of<GrupeNotifier>(context, listen: false).getGrupe();
     Provider.of<TerminiNotifier>(context, listen: false)
-        .setSkolaId(authNotifier.skolaId);
+        .setSkolaId(authNotifier.skolaId!);
     Provider.of<TerminiNotifier>(context, listen: false).getTermini();
     Provider.of<NastavniPlanNotifier>(context, listen: false)
-        .setSkolaId(authNotifier.skolaId);
+        .setSkolaId(authNotifier.skolaId!);
     Provider.of<NastavniPlanNotifier>(context, listen: false).getNastavniPlan();
-
+    Provider.of<AddNastavniPlanNotifier>(context, listen: false)
+        .setSkolaId(authNotifier.skolaId!);
     super.initState();
   }
 

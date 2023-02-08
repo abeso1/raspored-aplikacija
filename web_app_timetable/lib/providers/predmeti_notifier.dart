@@ -91,7 +91,7 @@ class PredmetiNotifier extends ChangeNotifier {
 
   Future<void> addPredmet() async {
     try {
-      await PredmetiClient().addPredmet(predmetDialog!);
+      await PredmetiClient().addPredmet(predmetDialog!, skolaId!);
     } catch (e) {
       debugPrint(e.toString());
     }

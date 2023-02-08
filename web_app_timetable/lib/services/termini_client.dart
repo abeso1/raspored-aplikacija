@@ -47,7 +47,8 @@ class TerminiClient {
     );
   }
 
-  Future<void> addTermin(TimeOfDay start, TimeOfDay end, Dan day) async {
+  Future<void> addTermin(
+      TimeOfDay start, TimeOfDay end, Dan day, SkolaId skolaId) async {
     await http.post(
       Uri.parse("$backendUrl/termin"),
       headers: {
@@ -60,7 +61,7 @@ class TerminiClient {
               "${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}:00",
           'kraj':
               "${end.hour.toString().padLeft(2, '0')}:${end.minute.toString().padLeft(2, '0')}:00",
-          'skola_id': 1,
+          'skola_id': skolaId.value,
           'smjena': 1,
         },
       ),

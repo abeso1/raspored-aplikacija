@@ -38,7 +38,7 @@ class GrupeClient {
     );
   }
 
-  Future<void> addGrupa(String grupa) async {
+  Future<void> addGrupa(String grupa, SkolaId skolaId) async {
     await http.post(
       Uri.parse("$backendUrl/grupa"),
       headers: {
@@ -47,7 +47,7 @@ class GrupeClient {
       body: jsonEncode(
         {
           'naziv': grupa,
-          'skola_id': 1,
+          'skola_id': skolaId.value,
         },
       ),
     );

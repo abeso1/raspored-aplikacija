@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../shared/global_variables.dart';
 
 class LoginClient {
-  Future<dynamic> login(String email, String password) async {
+  Future<String> login(String email, String password) async {
     var response = await http.post(
       Uri.parse("$backendUrl/login"),
       headers: {
@@ -18,5 +18,7 @@ class LoginClient {
         },
       ),
     );
+
+    return response.body;
   }
 }

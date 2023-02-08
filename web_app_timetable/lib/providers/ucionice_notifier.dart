@@ -91,7 +91,7 @@ class UcioniceNotifier extends ChangeNotifier {
 
   Future<void> addUcionica() async {
     try {
-      await UcioniceClient().addUcionica(ucionicaDialog!);
+      await UcioniceClient().addUcionica(ucionicaDialog!, skolaId!);
     } catch (e) {
       debugPrint(e.toString());
     }

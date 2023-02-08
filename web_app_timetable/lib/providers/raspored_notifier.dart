@@ -50,7 +50,7 @@ class RasporedNotifier extends ChangeNotifier {
 
   getRaspored() async {
     try {
-      var response = await RasporedClient().getRaspored(authNotifier.skolaId);
+      var response = await RasporedClient().getRaspored(authNotifier.skolaId!);
 
       if (response != null) {
         Map decoded = jsonDecode(response);
@@ -73,6 +73,7 @@ class RasporedNotifier extends ChangeNotifier {
       roomList: roomList,
       timeslotList: timeslotList,
       lessonList: lessonList,
+      skolaId: authNotifier.skolaId!,
     );
 
     if (response == null) {

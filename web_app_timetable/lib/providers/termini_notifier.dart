@@ -171,8 +171,8 @@ class TerminiNotifier extends ChangeNotifier {
 
   Future<void> addTermin() async {
     try {
-      await TerminiClient()
-          .addTermin(terminStartDialog!, terminEndDialog!, terminDayDialog!);
+      await TerminiClient().addTermin(
+          terminStartDialog!, terminEndDialog!, terminDayDialog!, skolaId!);
     } catch (e) {
       debugPrint(e.toString());
     }

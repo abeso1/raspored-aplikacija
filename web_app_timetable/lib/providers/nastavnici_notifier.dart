@@ -91,7 +91,7 @@ class NastavniciNotifier extends ChangeNotifier {
 
   Future<void> addPredmet() async {
     try {
-      await NastavniciClient().addNastavnik(nastavnikDialog!);
+      await NastavniciClient().addNastavnik(nastavnikDialog!, skolaId!);
     } catch (e) {
       debugPrint(e.toString());
     }

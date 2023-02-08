@@ -32,7 +32,7 @@ class NastavniciClient {
     return nastavnici;
   }
 
-  Future<void> addNastavnik(String predmet) async {
+  Future<void> addNastavnik(String predmet, SkolaId skolaId) async {
     await http.post(
       Uri.parse("$backendUrl/nastavnik"),
       headers: {
@@ -41,7 +41,7 @@ class NastavniciClient {
       body: jsonEncode(
         {
           'naziv': predmet,
-          'skola_id': 1,
+          'skola_id': skolaId.value,
         },
       ),
     );

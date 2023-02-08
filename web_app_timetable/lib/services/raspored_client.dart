@@ -13,6 +13,7 @@ class RasporedClient {
     required List<Map<String, String>> timeslotList,
     required List<Map<String, String>> roomList,
     required List<Map<String, int>> lessonList,
+    required SkolaId skolaId,
   }) async {
     try {
       for (var i = 0; i < 3; i++) {
@@ -33,7 +34,7 @@ class RasporedClient {
             .timeout(const Duration(minutes: 10));
 
         Map decoded = jsonDecode(utf8.decode(response.bodyBytes));
-//  "2022-12-13 21:45:55",
+        
         List decodedRaspored = decoded['lessonList'];
         if (response.statusCode == 200) {
           if (decodedRaspored.isNotEmpty) {
@@ -47,7 +48,7 @@ class RasporedClient {
                   "datum":
                       DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
                   "podaci": jsonEncode(decoded),
-                  "skola_id": 1
+                  "skola_id": skolaId.value
                 },
               ),
             );

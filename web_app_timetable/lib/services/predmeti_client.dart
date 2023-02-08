@@ -38,14 +38,18 @@ class PredmetiClient {
     );
   }
 
-  Future<void> addPredmet(String predmet) async {
+  Future<void> addPredmet(String predmet, SkolaId skolaId) async {
     await http.post(
       Uri.parse("$backendUrl/predmet"),
       headers: {
         "Content-Type": "application/json",
       },
       body: jsonEncode(
-        {'naslov': predmet, 'skola_id': 1, 'css': ''},
+        {
+          'naslov': predmet,
+          'skola_id': skolaId.value,
+          'css': '',
+        },
       ),
     );
   }

@@ -89,7 +89,7 @@ class GrupeNotifier extends ChangeNotifier {
 
   Future<void> addGrupa() async {
     try {
-      await GrupeClient().addGrupa(odjeljenjeDialog!);
+      await GrupeClient().addGrupa(odjeljenjeDialog!, skolaId!);
     } catch (e) {
       debugPrint(e.toString());
     }

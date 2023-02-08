@@ -13,10 +13,8 @@ import '../shared/global_variables.dart';
 class NastavniPlanClient {
   Future<List<Plan>> getNastavniPlan(SkolaId skolaId) async {
     var response = await http.get(
-      Uri.parse("$backendUrl/predavanje"),
+      Uri.parse("$backendUrl/predavanje/filter?skola_id=${skolaId.value}"),
     );
-
-    ///filter?skola_id=${skolaId.value}
 
     List<Plan> nastavniPlan = [];
 
@@ -39,8 +37,12 @@ class NastavniPlanClient {
     return nastavniPlan;
   }
 
-  Future<bool> addNastavniPlan(final PredmetId predmetId, final GrupaId grupaId,
-      final NastavnikId nastavnikId, final int brojCasova) async {
+  Future<bool> addNastavniPlan(
+      final PredmetId predmetId,
+      final GrupaId grupaId,
+      final NastavnikId nastavnikId,
+      final int brojCasova,
+      SkolaId skolaId) async {
     var response = await http.post(Uri.parse("$backendUrl/predavanje"),
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +52,7 @@ class NastavniPlanClient {
           "nastavnik_id": nastavnikId.value,
           "grupa_id": grupaId.value,
           "broj_casova": brojCasova,
-          "skola_id": 1
+          "skola_id": skolaId.value
         }));
 
     if (response.statusCode == 200) {

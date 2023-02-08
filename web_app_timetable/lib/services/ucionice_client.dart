@@ -38,7 +38,7 @@ class UcioniceClient {
     );
   }
 
-  Future<void> addUcionica(String ucionica) async {
+  Future<void> addUcionica(String ucionica, SkolaId skolaId) async {
     await http.post(
       Uri.parse("$backendUrl/ucionica"),
       headers: {
@@ -47,7 +47,7 @@ class UcioniceClient {
       body: jsonEncode(
         {
           'naziv': ucionica,
-          'skola_id': 1,
+          'skola_id': skolaId.value,
         },
       ),
     );
